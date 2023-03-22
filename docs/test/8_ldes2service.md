@@ -2,15 +2,13 @@
 sort: 13
 ---
 
-# LDES2service
+# LDES2SERVICE
 
 ## Triple store (LDES to GraphDB)
 
-![](/images/graphdb.png))
+<p align="center"><img src="/images/graphdb.png" width="80%" text-align="center"></p>
 
 The LDES2Service toolbox contains an "RDF4J Put" Processor , allowing to ingest members in triple stores that support the RDF4J API.
-
-**Example: GraphDB**
 
 [In this Github repo](https://github.com/samuvack/ldes-grar), a docker-compose file with the configuration of GraphDB and Apache NiFi. A data flow is configured in Apache NiFi to convert these data streams into GraphDB. You will find an [Apache NiFi configuration file](https://github.com/samuvack/ldes-grar/blob/main/NiFi_Flow.json) containing the necessary data flow.
 
@@ -30,15 +28,15 @@ The LDES2Service toolbox contains an "RDF4J Put" Processor , allowing to ingest
 
 8. LDES members will be stored one by one in your GraphDB
 
-![Afbeelding met tekst, overdekt, schermopname
 
-Automatisch gegenereerde beschrijving](file:///C:/Users/samue/AppData/Local/Temp/msohtmlclip1/01/clip_image003.png)
 
-You can find more information in this article: <https://medium.com/towards-artificial-intelligence/real-time-data-linkage-via-linked-data-event-streams-e1aab3090b40>
+```tip
+You can find more information in [this article]( https://medium.com/towards-artificial-intelligence/real-time-data-linkage-via-linked-data-event-streams-e1aab3090b40)
+```
 
 ## Data science (LDES to PostgreSQL/TimescaleDB)
 
-![](/images/timescaledb.png)
+<p align="center"><img src="/images/timescaledb.png"  width="80%" text-align="center"></p>
 
 In this [Github repo](https://github.com/samuvack/LDES2TimescaleDB), you will find a docker file with the configuration of TimescaleDB and Apache NiFi. A data flow is configured in Apache NiFi to convert these data streams into TimescaleDB. You will find an Apache NiFi configuration file containing the necessary data flow. This Apache NiFi data flow works also for storing LDES members in a PostgreSQL database.
 
@@ -64,16 +62,17 @@ In this [Github repo](https://github.com/samuvack/LDES2TimescaleDB), you will fi
 
 ![Linked Data Event Streams and TimescaleDB for Real-time Timeseries Data Management](file:///C:/Users/samue/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
 
-You can find more information in this article: <https://medium.com/towards-artificial-intelligence/linked-data-event-streams-and-timescaledb-for-real-time-timeseries-data-management-9e82ba336f82>
-
+```tip
+You can find more information in [this article](https://medium.com/towards-artificial-intelligence/linked-data-event-streams-and-timescaledb-for-real-time-timeseries-data-management-9e82ba336f82)
+```
 
 ## Business intelligence (LDES to PowerBI)
+
+<p align="center"><img src="/images/powerbi.png"  width="80%" text-align="center"></p>
 
 
 
 In this [Github repo](https://github.com/Informatievlaanderen/VSDS-LDESDemo/tree/master/geoserver), you will find a docker file with the configuration of PostgreSQL, Apache NiFi and a configuration file for PowerBI. 
-
-![](/images/powerbi.png)
 
 
 A data flow is configured in Apache NiFi to convert these data streams into PostgreSQL. You will find an Apache NiFi configuration file containing the necessary data flow. This Apache NiFi data flow works also for storing LDES members in a PostgreSQL database.
@@ -100,16 +99,18 @@ A data flow is configured in Apache NiFi to convert these data streams into Post
 
 11. [Link PostgreSQL to Geoserver](https://docs.geoserver.org/latest/en/user/data/database/postgis.html)
 
-You can find more information in this article: <https://medium.com/p/5cd8379d32>
-
+```tip
+You can find more information in [this article](https://medium.com/p/5cd8379d32)
+```
 
 
 ## Digital Twin
 
+<p align="center"><img src="/images/geoserver.png"  width="80%" text-align="center"></p>
 
 In this [Github repo](https://github.com/Informatievlaanderen/VSDS-LDESDemo/tree/master/geoserver), you will find a docker file with the configuration of PostgreSQL, Apache NiFi and Geoserver. 
 
-![](/images/geoserver.png)
+
 
 A data flow is configured in Apache NiFi to convert these data streams into PostgreSQL. You will find an Apache NiFi configuration file containing the necessary data flow. This Apache NiFi data flow works also for storing LDES members in a PostgreSQL database.
 
@@ -136,27 +137,33 @@ A data flow is configured in Apache NiFi to convert these data streams into Post
 
 ![]()
 
-You can find more information in this article: <https://medium.com/geekculture/enriching-digital-twins-with-linked-data-event-streams-285630a02b82>
-
+```tip
+You can find more information in [this article](https://medium.com/geekculture/enriching-digital-twins-with-linked-data-event-streams-285630a02b82)
+```
 
 ## GeoSpatial analysis (LDES to QGIS)
+
+<p align="center"><img src="/images/qgis.png"  width="80%" text-align="center"></p>
+
+
 
 1. Follow the steps from **LDES to PostgreSQL/TimescaleDB**
 
 2. Connecting QGIS to a PostgreSQL/PostGIS database lets you access and visualise your geo data in real-time.
 
 
-![](/images/qgis.png)
 
-
-You can find more information in this article: <https://medium.com/geekculture/visualizing-linked-data-event-streams-with-qgis-da25b6ccfc1b>
+```tip
+You can find more information in [this article](https://medium.com/geekculture/visualizing-linked-data-event-streams-with-qgis-da25b6ccfc1b)
+```
 
 ## Machine Learning (ML-LDES server)
+
+<p align="center"><img src="/images/ml.png"  width="80%" text-align="center"></p>
 
 
 In this [Github repo](https://github.com/samuvack/ML-LDES-server), you will find a docker file with the configuration of PostgreSQL and Apache NiFi. 
 
-![](/images/ml.png)
 
 A data flow is configured in Apache NiFi to convert these data streams into PostgreSQL. You will find an Apache NiFi configuration file containing the necessary data flow. This Apache NiFi data flow works also for storing LDES members in a PostgreSQL database.
 
@@ -184,9 +191,6 @@ A data flow is configured in Apache NiFi to convert these data streams into Post
 
 [Go to github repo for more info about ML-LDES server prototype](https://github.com/samuvack/ML-LDES-server)
 
-You can find more information in these articles:
-
-- <https://medium.com/towards-artificial-intelligence/incremental-machine-learning-for-linked-data-event-streams-e5441cb4c65a>
-
-- <https://medium.com/towards-artificial-intelligence/forecasting-linked-data-event-streams-on-the-internet-of-water-826171085bae>
-
+```tip
+You can find more information in [this](https://medium.com/towards-artificial-intelligence/incremental-machine-learning-for-linked-data-event-streams-e5441cb4c65a) and [this article](https://medium.com/towards-artificial-intelligence/forecasting-linked-data-event-streams-on-the-internet-of-water-826171085bae)
+```

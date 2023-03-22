@@ -3,7 +3,7 @@ sort: 1
 ---
 
 
-# Quick start
+# QUICK START
 
 ## Example 1
 

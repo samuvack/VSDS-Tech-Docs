@@ -13,7 +13,9 @@ A Linked Data Event Stream (LDES) is defined as a collection of immutable object
 
 These objects are described using a specific format called RDF triples, which stands for Resource Description Framework triples. RDF is one of the corner stones of Linked Data and on which Linked Data Event Streams continues to build.
 
-More information on Linked Data can be found here.
+```tip
+More information on Linked Data can be found [here](https://www.w3.org/standards/semanticweb/data).
+```
 
 The LDES specification is based on a particular specification, called the [TREE specification](https://w3id.org/tree/specification). The TREE specification originates from the idea to provide an alternative to one-dimensional HTTP pagination. It allows to fragment a collection of items and interlink these fragments. Instead of linking to the next or previous page, the relation describes what elements can be found by following the link to another fragment. The LDES specification extends the TREE specification by stating that every item in the collection ***must***be immutable.
 
@@ -25,6 +27,7 @@ This specification is designed to be compatible with other specifications, such 
 
 Linked Data Event Streams (LDES) apply --- as the term implies --- the Linked Data principles to data event streams. A data stream is typically a constant flow of distinct data points, each containing information about an event or change of state that originates from a system that continuously creates data. Some examples of data streams include sensor and other IoT data, financial data, etc.
 
+```note
 LDES has several technical advantages:
 
 - LDES is a technical standard that allows data to be exchanged across silos using domain-specific ontology;
@@ -32,7 +35,7 @@ LDES has several technical advantages:
 - LDES is one standard for both fast and slow-changing data;
 
 - LDES offers a solution for managing historical records, versions, and retention policies efficiently.
-
+```
 
 
 A Linked Data Event Stream is a constant flow of immutable objects (such as version objects of addresses, sensor observations or archived representations) containing information about an event or change of state that originates from a system that continuously creates data.
@@ -95,13 +98,13 @@ example:member2 dct:title “The second member”;
 
 An LDES focuses on allowing clients to replicate a dataset's history and efficiently synchronise with its latest changes. Linked Data Event Streams may be fragmented when their size becomes too big for one HTTP response.
 
-**Link: Go to LDES server -> Fragmentation**
+
 
 ## Retention policy
 
 A retention policy is a set of rules determining how long data should be kept or deleted. A retention policy can be applied to Linked Data Event Streams (LDES) to manage the storage and availability of data objects over time.
 
-**Link: Go to LDES server ****à Retention policy**
+
 
 ## SHACL
 

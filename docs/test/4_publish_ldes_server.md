@@ -31,7 +31,7 @@ For more information about the SHACL shape and its structure, **link:** **go to 
 ### Example HTTP Ingest-Fetch Configuration:
 
 
-```
+```config
 server.port: { http-port }
 ldes:
   collection-name: { short name of the collection, cannot contain characters that are used for url interpretation, e.g.’ $’, ‘=’ or ‘&’}

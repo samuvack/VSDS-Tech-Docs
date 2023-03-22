@@ -2,7 +2,7 @@
 sort: 14
 ---
 
-# Use cases LDES server
+# USE CASE LDES SERVER
 
 ##  Kafka to LDES server
 

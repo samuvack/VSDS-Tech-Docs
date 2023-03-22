@@ -23,7 +23,7 @@ LDES can also help overcome these challenges by providing a generic and flexible
 
 <cite>"Anyone can build their querying interface and keep it up to date"</cite>
 
-<p align="center"><img src="/images/LDES_API.png"  width="100%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/LDES_API.png"  width="100%" text-align="center"></p>
 
 
 Linked Data Event Streams (LDES) try to fix this situation by providing a generic and flexible base API for open datasets.

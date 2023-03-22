@@ -10,7 +10,7 @@ sort: 9
 
 
 
-![](/VSDS-Tech-Docs/images/LDES%20client.png)
+<p align="center"><img src="/VSDS-Tech-Docs/images/LDES%20client.png" width="60%" text-align="center"></p>
 
 The [LDES CLIENT](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions) is designed for both replication and synchronisation, meaning that the client can retrieve members of an LDES but also checks regularly if new members are added, and fetches them, allowing data consumers to stay up to date with the dataset.
 
@@ -41,7 +41,7 @@ By utilising the response headers provided by the LDES server, the LDES client c
 
 In addition to the functionalities above, the LDES client maintains an SQLite database of immutable and mutable fragment IDs. For mutable fragments, member IDs are also stored in the database, ensuring that a member is not processed twice.
 
-![](/VSDS-Tech-Docs/images/State.png)
+<p align="center"><img src="/VSDS-Tech-Docs/images/State.png" width="60%" text-align="center"></p>
 
 This way, the LDES client also functions as a gatekeeper, allowing it to continue where it stopped without having to read the LDES from the beginning.
 

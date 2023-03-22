@@ -22,8 +22,8 @@ Data consumers often have to deal with multiple versions or copies of a dataset 
 LDES can also help overcome these challenges by providing a generic and flexible base API for open datasets. With LDES, data consumers can use RDF tools and standards to follow the history and provenance of each object in an LDES. They can also use RDF tools and standards to compare different things in an LDES based on their properties and relations. Data consumers only download and store changes in data rather than full snapshots or deltas, reducing bandwidth and storage requirements. They only process and filter relevant data based on their views and indexes on top of the main event stream. LDES also ensures that data consumers consistently access the latest and most complete version of data and receive notifications about significant changes or updates in data.
 
 <cite>"Anyone can build their querying interface and keep it up to date"</cite>
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/LDES_API.png"  width="100%" text-align="center"></p>
+src="/VSDS-Tech-Docs/images/
+<p align="center"><img LDES_API.png"  width="100%" text-align="center"></p>
 
 
 Linked Data Event Streams (LDES) try to fix this situation by providing a generic and flexible base API for open datasets.

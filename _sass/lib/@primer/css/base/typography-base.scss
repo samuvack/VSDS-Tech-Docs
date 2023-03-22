@@ -11,8 +11,20 @@ h6 {
   margin-bottom: 0;
 }
 
+
+@font-face {
+  font-family: 'FlandersArtSans-SerifThin';
+  font-weight: $font-weight-normal;
+  font-style: normal;
+  font-display: block;
+  src: url('/webfonts/serif/FlandersArtSerif-Thin.woff2') format('woff2'),
+    url('/webfonts/serif/FlandersArtSerif-Thin.woff') format('woff');
+}
+
+
 h1 {
   @include h1;
+  font-family: 'FlandersArtSans-SerifThin';
 }
 h2 {
   @include h2;

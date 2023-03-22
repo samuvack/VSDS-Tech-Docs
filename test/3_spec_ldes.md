@@ -2,8 +2,10 @@
 sort: 5
 ---
 
-What is a Linked data Event Stream
-====================================================================================================================================================================================================================================================================================================================================================
+# SPECIFICATION
+
+## What is a Linked data Event Stream
+
 
 "LDES is a specification for publishing an append-only collection of immutable members. Consumers can then host one or more always in-sync Linked Data Fragments views on top of an Event Source."
 
@@ -15,9 +17,9 @@ More information on Linked Data can be found here.
 
 The LDES specification is based on a particular specification, called the [TREE specification](https://w3id.org/tree/specification). The TREE specification originates from the idea to provide an alternative to one-dimensional HTTP pagination. It allows to fragment a collection of items and interlink these fragments. Instead of linking to the next or previous page, the relation describes what elements can be found by following the link to another fragment. The LDES specification extends the TREE specification by stating that every item in the collection ***must***be immutable.
 
-![](file:///C:/Users/samue/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
+![](/images/)
 
-Figure 1. LDES
+
 
 This specification is designed to be compatible with other specifications, such as Activity Streams Core, VOCAB-DCAT-2, LDP, and Shape Trees. This means you can use the LDES spec in combination with these other formats to create a more comprehensive and powerful data structure.
 
@@ -53,8 +55,8 @@ In a nutshell, there are several reasons why there was a need to add Linked Data
 
 - Linked Data Event Streams allow applications to subscribe to event streams and receive updates in real-time, which can be helpful in various applications, such as real-time data analysis, event-driven architecture, and more.
 
-Example of a Linked data Event Stream
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Example of a Linked data Event Stream
+
 
 State object
 
@@ -64,8 +66,7 @@ CONTEXT
 
 LDES
 
-HTML specification
------------------------
+## HTML specification
 
 
 ```
@@ -87,3 +88,27 @@ example:member2 dct:title “The second member”;
  dct:description “The second member of the Linked Data Event Stream”;
  dct:created "2023-01-02T11:00:00Z"^^xsd:dateTime.
 ```
+
+# Features
+
+## Fragmentation and pagination
+
+An LDES focuses on allowing clients to replicate a dataset's history and efficiently synchronise with its latest changes. Linked Data Event Streams may be fragmented when their size becomes too big for one HTTP response.
+
+**Link: Go to LDES server -> Fragmentation**
+
+## Retention policy
+
+A retention policy is a set of rules determining how long data should be kept or deleted. A retention policy can be applied to Linked Data Event Streams (LDES) to manage the storage and availability of data objects over time.
+
+**Link: Go to LDES server ****à Retention policy**
+
+## SHACL
+
+[SHACL (Shapes Constraint Language)](https://www.w3.org/TR/shacl/) is a standard for validating RDF data and ensuring that it conforms to a particular structure or shape. In the context of the Linked Data Event Stream (LDES), SHACL shapes are used to define the expected structure of the events in the stream, including their properties, relationships, and constraints.
+
+By incorporating SHACL shapes, LDES provides a powerful tool for ensuring data quality and consistency, making it a reliable and trustworthy source of data for various applications. By defining a SHACL shape for the LDES, data producers can ensure that the events they generate adhere to the required structure, while data consumers can use the shape to validate and reason about the data they receive. LDES also supports dynamic SHACL shape discovery, allowing consumers to query the stream for relevant shapes and adapt to changes in the data over time.
+
+## DCAT
+
+[DCAT](https://www.w3.org/TR/vocab-dcat-3/) is an RDF vocabulary for data catalogues on the Web, enabling easy interoperability and discoverability of metadata for datasets, data services, and portals. It standardises properties for describing datasets, access information, and data services. By using DCAT, publishers can increase their datasets' exposure and facilitate data sharing and reuse. DCAT is extensible, maintained by the W3C, and the latest version is DCAT 3.

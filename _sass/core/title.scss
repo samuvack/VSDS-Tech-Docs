@@ -1,10 +1,12 @@
+
+
 .title {
   // 600
   font-weight: $font-weight-bold;
-  color: $theme-white;
+  color: #666;
 
   a {
-    color: $theme-white;
+    color: #666;
     &:hover {
       background: $theme-mask-white;
     }

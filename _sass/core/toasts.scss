@@ -1,11 +1,25 @@
 .toasts {
   // fixed note
   font-size: $h4-size;
+
   // mdl
   @include shadow-2dp();
 
+
+@font-face {
+    font-family: 'FlandersArtSans-SerifThin';
+    font-weight: $font-weight-normal;
+    font-style: normal;
+    font-display: block;
+    src: url('/webfonts/serif/FlandersArtSerif-Thin.woff2') format('woff2'),
+      url('/webfonts/serif/FlandersArtSerif-Thin.woff') format('woff');
+  }
+
   .title {
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.14);
+    color: #666;
+    font-family: 'FlandersArtSans-SerifThin';
+    
   }
 
   // fixed
@@ -23,7 +37,7 @@
     background-color: lighten($theme-blue, 50%);
 
     .title {
-      background: lighten($theme-blue, 20%);
+      background: lighten($theme-blue, 1%);
     }
   }
 

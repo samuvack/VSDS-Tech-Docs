@@ -1,7 +1,5 @@
-title: jekyll-rtd-theme
-description: Just another documentation theme compatible with GitHub Pages
-
-theme: null
+title: Tech docs
+description: Technical documentation of VSDS
 
 # debug:
 #   compress: true
@@ -10,6 +8,7 @@ theme: null
 
 readme_index:
   with_frontmatter: true
+
 
 plugins:
   - jemoji

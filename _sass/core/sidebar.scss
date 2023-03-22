@@ -1,6 +1,6 @@
 .sidebar {
-  color: $theme-white;
-  background: $theme-menu-background;
+  color: #666;
+  background: #fff; //$theme-menu-background
 
   a {
     text-decoration: none;
@@ -10,18 +10,18 @@
     list-style: none;
   }
   .version {
-    color: rgba(255, 255, 255, 0.3);
+    color: #666;
   }
 }
 
 .toctree {
   a {
-    color: $theme-white;
+    color: #666;
     padding: 0.5em;
   }
 
   .caption {
-    color: lighten($theme-blue, 15%);
+    color: #666;
     font-weight: $font-weight-bold;
     line-height: 32px;
   }
@@ -49,7 +49,7 @@
     .toc.current {
       // all expanded links
       a {
-        color: #404040;
+        color: #666;
 
         &:hover {
           background: $theme-mask-white;

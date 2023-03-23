@@ -5,7 +5,7 @@ sort: 9
 # LDES CLIENT
 
 
-<p align="center"><img src="/images/LDES%20client.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/LDES%20client.png" width="60%" text-align="center"></p>
 
 The [LDES CLIENT](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions) is designed for both replication and synchronisation, meaning that the client can retrieve members of an LDES but also checks regularly if new members are added, and fetches them, allowing data consumers to stay up to date with the dataset.
 
@@ -18,7 +18,7 @@ This information is important for the LDES client, because it only must fetch an
 
 In order to start the replication of an LDES, data consumers must configure the LDES client with an LDES *view* endpoint. If the data consumer configures the LDES endpoint, which possibly describes multiple views, the LDES client will use the first view it receives to start the replication.
 
-![](/images/)
+![](/VSDS-Tech-Docs/images/)
 
 Whenever a client visits a fragment, it parses the contents to RDF and looks for triples with the **tree:member** predicate to discover members of the LDES. In addition, the client also searches for triples with a **tree:relation** predicate, indicating relations to other fragments and adds it to its queue of to-be-fetched fragments, if the fragment was not already fetched earlier. For every fragment, the client checks the *response headers*, looking for a possible '*Cache-control: immutable*', indicating that the fragment does not need to be polled again.
 
@@ -36,7 +36,7 @@ By utilising the response headers provided by the LDES server, the LDES client c
 
 In addition to the functionalities above, the LDES client maintains an SQLite database of immutable and mutable fragment IDs. For mutable fragments, member IDs are also stored in the database, ensuring that a member is not processed twice.
 
-<p align="center"><img src="/images/State.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/State.png" width="60%" text-align="center"></p>
 
 This way, the LDES client also functions as a gatekeeper, allowing it to continue where it stopped without having to read the LDES from the beginning.
 

@@ -6,7 +6,7 @@ sort: 13
 
 ## Triple store (LDES to GraphDB)
 
-<p align="center"><img src="/images/graphdb.png" width="80%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/graphdb.png" width="80%" text-align="center"></p>
 
 The LDES2Service toolbox contains an "RDF4J Put" Processor , allowing to ingest members in triple stores that support the RDF4J API.
 
@@ -36,7 +36,7 @@ You can find more information in [this article]( https://medium.com/towards-arti
 
 ## Data science (LDES to PostgreSQL/TimescaleDB)
 
-<p align="center"><img src="/images/timescaledb.png"  width="80%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/timescaledb.png"  width="80%" text-align="center"></p>
 
 In this [Github repo](https://github.com/samuvack/LDES2TimescaleDB), you will find a docker file with the configuration of TimescaleDB and Apache NiFi. A data flow is configured in Apache NiFi to convert these data streams into TimescaleDB. You will find an Apache NiFi configuration file containing the necessary data flow. This Apache NiFi data flow works also for storing LDES members in a PostgreSQL database.
 
@@ -68,7 +68,7 @@ You can find more information in [this article](https://medium.com/towards-artif
 
 ## Business intelligence (LDES to PowerBI)
 
-<p align="center"><img src="/images/powerbi.png"  width="80%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/powerbi.png"  width="80%" text-align="center"></p>
 
 
 
@@ -106,7 +106,7 @@ You can find more information in [this article](https://medium.com/p/5cd8379d32)
 
 ## Digital Twin
 
-<p align="center"><img src="/images/geoserver.png"  width="80%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/geoserver.png"  width="80%" text-align="center"></p>
 
 In this [Github repo](https://github.com/Informatievlaanderen/VSDS-LDESDemo/tree/master/geoserver), you will find a docker file with the configuration of PostgreSQL, Apache NiFi and Geoserver. 
 
@@ -143,7 +143,7 @@ You can find more information in [this article](https://medium.com/geekculture/e
 
 ## GeoSpatial analysis (LDES to QGIS)
 
-<p align="center"><img src="/images/qgis.png"  width="80%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/qgis.png"  width="80%" text-align="center"></p>
 
 
 
@@ -159,7 +159,7 @@ You can find more information in [this article](https://medium.com/geekculture/v
 
 ## Machine Learning (ML-LDES server)
 
-<p align="center"><img src="/images/ml.png"  width="80%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/ml.png"  width="80%" text-align="center"></p>
 
 
 In this [Github repo](https://github.com/samuvack/ML-LDES-server), you will find a docker file with the configuration of PostgreSQL and Apache NiFi. 

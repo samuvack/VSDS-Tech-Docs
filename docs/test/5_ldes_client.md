@@ -43,19 +43,15 @@ This way, the LDES client also functions as a gatekeeper, allowing it to continu
 
 
 
-## Quickstart
+## E2E Client Sink
 
-
-
-E2E Client Sink
-===============
 
 The E2E Client Sink is a small HTTP server used for E2E testing the LDES client NiFi processor.
 
-[](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#docker)Docker
----------------------------------------------------------------------------------------------------------
+### Docker
 
-The sink can be run as a Docker container, using a pre-built container or after creating a Docker image for it locally. The Docker container will keep running until stopped.
+
+The sink can be run as a [Docker container](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#docker), using a pre-built container or after creating a Docker image for it locally. The Docker container will keep running until stopped.
 
 To create a Docker image, run the following command:
 
@@ -95,27 +91,26 @@ CONTAINER ID   IMAGE                   COMMAND                  CREATED         
 
 To stop the container, you need to call the stop command with the (long or short) container ID, e.g. `docker stop 0cc5d65d8108`
 
-[](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#docker-compose)Docker compose
--------------------------------------------------------------------------------------------------------------------------
+**Docker compose**
 
-For your convenience a [Docker compose file](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/ldes-client-sink/docker-compose.yml) is provided containing the client sink and a MongoDB store, and a [.env](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/ldes-client-sink/.env) file with environment variables used for building and running the containers. The sink variables typically need tuning for your use case. The easiest way to provide these is to copy the `.env` file into a file named `user.env` and change the variables as required. Then you can run the following command to build and run the Docker containers:
+For your convenience a [Docker compose file](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/ldes-client-sink/docker-compose.yml) is provided containing the client sink and a MongoDB store, and a [.env](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/ldes-client-sink/.env) file with environment variables used for building and running the containers. The sink variables typically need tuning for your use case. The easiest way to provide these is to copy the `.env` file into a file named `user.env` and change the variables as required. Then you can run the following command to build and run the [Docker containers](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#docker-compose):
 
 ```source-shell
 docker compose --env-file user.env up
 ```
 
-[](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#build)Build
--------------------------------------------------------------------------------------------------------
+## Build
 
-The sink is implemented as a [Node.js](https://nodejs.org/en/) application. You need to run the following commands to build it:
+
+The sink is implemented as a [Node.js](https://nodejs.org/en/) application. You need to run the following commands to [build it](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#build):
 
 ```source-shell
 npm i
 npm run build
 ```
 
-[](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#run)Run
----------------------------------------------------------------------------------------------------
+**Run**
+
 
 The sink uses a MongoDB as permanent storage to allow for large data sets, so before running the sink, make sure your MongoDB instance is running.
 
@@ -130,7 +125,7 @@ The sink takes the following command line arguments:
 -   `--collection-name` allows to set the MongoDB collection name, defaults to `members`
 -   `--memory` allows to use an in-memory database for smaller data sets instead of MongoDB, defaults to false
 
-You can run the sink with one of the following command after building it:
+You can [run the sink](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#run) with one of the following command after building it:
 
 ```source-shell
 node dist/server.js --member-type "http://schema.org/Person" --collection-name cartoons --memory true
@@ -148,10 +143,9 @@ Sink listening at http://127.0.0.1:9000
 
 ```
 
-[](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#usage)Usage
--------------------------------------------------------------------------------------------------------
+**Usage**
 
-The sink server accepts the following REST calls.
+The sink server accepts the following [REST calls](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#usage).
 
 ### [](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-----retrieve-number-of-ingested-members)`GET /` -- Retrieve Number of Ingested Members
 

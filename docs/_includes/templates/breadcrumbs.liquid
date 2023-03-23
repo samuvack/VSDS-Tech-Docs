@@ -15,7 +15,7 @@
                     404
                 </li>
             {%- else -%}
-                {%- assign blocks = {{page.path | replace: "test", ""}} | split: "/" -%}
+                {%- assign blocks = {{page.path | replace: "/test", ""}} | split: "/" -%}
                 {%- for block in blocks -%}
                     <li class="breadcrumb-item" {% if forloop.last %}aria-current="page"{% endif %}>
                         {%- if forloop.last -%}

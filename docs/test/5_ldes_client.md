@@ -99,7 +99,7 @@ For your convenience a [Docker compose file](https://github.com/Informatievlaan
 docker compose --env-file user.env up
 ```
 
-## Build
+### Build
 
 
 The sink is implemented as a [Node.js](https://nodejs.org/en/) application. You need to run the following commands to [build it](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#build):
@@ -147,9 +147,9 @@ Sink listening at http://127.0.0.1:9000
 
 The sink server accepts the following [REST calls](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#usage).
 
-### [](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-----retrieve-number-of-ingested-members)`GET /` -- Retrieve Number of Ingested Members
+<ins>`GET /` -- Retrieve Number of Ingested Members</ins>
 
-Returns the number of members received, e.g.
+[Returns the number of members received, e.g.](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-----retrieve-number-of-ingested-members)
 
 ```source-shell
 curl http://localhost:9000/
@@ -161,9 +161,9 @@ returns:
 {"cartoons":{"total":0}}
 ```
 
-### [](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#post-member----ingest-members)`POST /member` -- Ingest Members
+<ins>`POST /member` -- Ingest Members</ins>
 
-Ingests a member as quads (mime-type: `application/n-quads`) or as triples (mime-type: `application/n-triples`) and returns the member ID (URI), e.g.
+[Ingests a member as quads](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#post-member----ingest-members) (mime-type: `application/n-quads`) or as triples (mime-type: `application/n-triples`) and returns the member ID (URI), e.g.
 
 ```source-shell
 curl -X POST http://localhost:9000/member -H "Content-Type: application/n-quads" -d "@donald-duck.nq"
@@ -182,9 +182,9 @@ http://example.org/id/cartoon-figure/donald-duck
 
 ```
 
-### [](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-member----get-member-list)`GET /member` -- Get Member List
+<ins>`GET /member` -- Get Member List</ins>
 
-Returns the (limited) list of members (as local URLs), e.g.
+[Returns the (limited) list of members (as local URLs), e.g.](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-member----get-member-list)
 
 ```source-shell
 curl http://localhost:9000/member
@@ -204,9 +204,9 @@ returns (formatted for readability):
 }
 ```
 
-### [](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-memberidurl-encoded-member-id----get-member-content)`GET /member?id=<url-encoded-member-id>` -- Get Member Content
+<ins>`GET /member?id=<url-encoded-member-id>` -- Get Member Content</ins>
 
-Returns the member content as quads (if ingested with mime-type: `application/n-quads`), e.g.
+[Returns the member content as quads](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#get-memberidurl-encoded-member-id----get-member-content) (if ingested with mime-type: `application/n-quads`), e.g.
 
 ```source-shell
 curl "http://localhost:9000/member?id=http%3A%2F%2Fexample.org%2Fid%2Fcartoon-figure%2Fdonald-duck"
@@ -220,9 +220,9 @@ returns (formatted for readability):
 
 ```
 
-### [](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#delete-member----remove-all-members)`DELETE /member` -- Remove all Members
+<ins>`DELETE /member` -- Remove all Members</ins>
 
-Removes all members, e.g.
+[Removes all members, e.g.](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/ldes-client-sink#delete-member----remove-all-members)
 
 ```source-shell
 curl -X DELETE http://localhost:9000/member

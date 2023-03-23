@@ -17,7 +17,7 @@ Apache Kafka can be used as a data provider for ingesting data topics into the L
 
 <p align="center"><img src="/VSDS-Tech-Docs/images/Kafka_onboarding.png"  width="60%" text-align="center"></p>
 
-This [GitHub repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) demonstrates the configuration of transferring subscribed GRAR (Gebouwen, adressen & percelen) Kafka data stream to the published substring fragmented LDES Stream using LDES Server. As we have no control over the GRAR system, the demo uses a [JSON Data Generator](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/json-data-generator/README.md) which produces a continuous stream of addresses as an alternative to the GRAR system. Also, the Apache NIFI has standard Kafka Reader processors for subscribing to Kafka stream, please modify the [nifi-workflow.json](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/nifi-workflow.json) accordingly based on your environment. An example setup with Kafka can be as follow (GRAR.json[[DX1]](https://vlaamseoverheid.sharepoint.com/sites/Digitaal-Vlaanderen-VSDS/Gedeelde%20documenten/General/VSDS%20portaal/Tech%20docs.docx#_msocom_1) ), please modify the credentials for the Kafka topic accordingly:
+This [GitHub repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) demonstrates the configuration of transferring subscribed GRAR (Building units, addresses & parcels) Kafka data stream to the published substring fragmented LDES Stream using LDES Server. As we have no control over the GRAR system, the demo uses a [JSON Data Generator](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/json-data-generator/README.md) which produces a continuous stream of addresses as an alternative to the GRAR system. Also, the Apache NIFI has standard Kafka Reader processors for subscribing to Kafka stream, please modify the [nifi-workflow.json](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/nifi-workflow.json) accordingly based on your environment. An example setup with Kafka can be as follow (GRAR.json[[DX1]](https://vlaamseoverheid.sharepoint.com/sites/Digitaal-Vlaanderen-VSDS/Gedeelde%20documenten/General/VSDS%20portaal/Tech%20docs.docx#_msocom_1) ), please modify the credentials for the Kafka topic accordingly:
 
 To try out the demo, you need to make sure the required ports for LDES Server and NIFI are free to be used. For the details, please refer to [docker-compose.yml](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/docker-compose.yml).
 
@@ -35,9 +35,7 @@ Please follow [README.md](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-
 
 * * * * *
 
-Add link here:  [GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GRAR.json).
-
-
+The Apahce NiFI configuration file can be found here:  [GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GRAR.json).
 
 
 ##  MQTT to LDES server
@@ -48,7 +46,7 @@ Add link here:  [GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GR
 
 ## Fiware to LDES server
 
-The FIWARE-Orion Context Broker (OCB) can be integrated with the VSDS LDES (Linked Data Event Streams) Server as a data provider. The OCB is an open-source software component developed by FIWARE that can manage real-time context information by receiving updates from IoT devices, sensors, and other sources, and storing this information in a centralized location.
+The FIWARE-Orion Context Broker (OCB) can be integrated as a data provider with the VSDS LDES (Linked Data Event Streams) Server. The OCB is an open-source software component developed by FIWARE that can manage real-time context information by receiving updates from IoT devices, sensors, and other sources and storing this information in a centralized location.
 
 One example of this integration is demonstrated in the diagram below, which illustrates the use case of onboarding the Internet of Water (VMM) data. The details of this use case locate at [Orien Context Broker - IOW.](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/use-cases/iow)   
 

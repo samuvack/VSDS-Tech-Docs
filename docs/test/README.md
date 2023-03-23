@@ -4,9 +4,8 @@ sort: 2
 
 # Technical Documentation
 
-This is the official technical documentation of the Flemisch Smart Data Space. 
 
-
+<br>
 
 <p align="center"><img src="/VSDS-Tech-Docs/images/LDES.png"  width="100%" text-align="center"></p>
 

@@ -4,7 +4,7 @@ sort: 14
 
 # USE CASE LDES SERVER
 
-![](/VSDS-Tech-Docs/images/onboarding.png)
+<p align="center"><img src="/VSDS-Tech-Docs/images/onboarding.png"  width="100%" text-align="center"></p>
 
 Apache Kafka, Fiware-Orien Context Broker, and MQTT can be used as a Publisher to the VSDS LDES Ecosystem. The following examples will explain the use cases.   
 
@@ -15,7 +15,7 @@ Apache Kafka, Fiware-Orien Context Broker, and MQTT can be used as a Publisher t
 Apache Kafka can be used as a data provider for ingesting data topics into the LDES ecosystem. The diagram below illustrates how the VSDS NIFI solution subscribes to a Kafka stream, updates the dataset's attributes, converts it into an LDES-formatted stream, and uses HTTP protocols to publish it to the LDES Server. This process enables fragmentation or pagination of the data.
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Kafka_onboarding.png"  width="100%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Kafka_onboarding.png"  width="60%" text-align="center"></p>
 
 This [GitHub repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) demonstrates the configuration of transferring subscribed GRAR (Gebouwen, adressen & percelen) Kafka data stream to the published substring fragmented LDES Stream using LDES Server. As we have no control over the GRAR system, the demo uses a [JSON Data Generator](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/json-data-generator/README.md) which produces a continuous stream of addresses as an alternative to the GRAR system. Also, the Apache NIFI has standard Kafka Reader processors for subscribing to Kafka stream, please modify the [nifi-workflow.json](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/nifi-workflow.json) accordingly based on your environment. An example setup with Kafka can be as follow (GRAR.json[[DX1]](https://vlaamseoverheid.sharepoint.com/sites/Digitaal-Vlaanderen-VSDS/Gedeelde%20documenten/General/VSDS%20portaal/Tech%20docs.docx#_msocom_1) ), please modify the credentials for the Kafka topic accordingly:
 
@@ -43,7 +43,7 @@ Add link here:  [GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GR
 ##  MQTT to LDES server
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/MQTT.png"  width="100%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/MQTT.png"  width="60%" text-align="center"></p>
 
 
 ## Fiware to LDES server
@@ -53,7 +53,7 @@ The FIWARE-Orion Context Broker (OCB) can be integrated with the VSDS LDES (Link
 One example of this integration is demonstrated in the diagram below, which illustrates the use case of onboarding the Internet of Water (VMM) data. The details of this use case locate at [Orien Context Broker - IOW.](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/use-cases/iow)   
 
 
-<p align="center"><img src="/images/orion_onboarding_iow.png"  width="100%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/orion_onboarding_iow.png"  width="70%" text-align="center"></p>
 
 In this case, the OCB is integrated into the LDES ecosystem to publish context updates to an LDES stream. The VSDS NIFI solution is used to translate the context data into LDES events and publish them to the LDES stream via an update attributes processor, an OSLO converter processor, and an LdesConverter process NIFI pipeline.
 

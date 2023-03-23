@@ -4,7 +4,7 @@ sort: 14
 
 # USE CASE LDES SERVER
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/onboarding.png"  width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/onboarding.png"  width="50%" text-align="center"></p>
 
 Apache Kafka, Fiware-Orien Context Broker, and MQTT can be used as a Publisher to the VSDS LDES Ecosystem. The following examples will explain the use cases.   
 
@@ -17,7 +17,7 @@ Apache Kafka can be used as a data provider for ingesting data topics into the L
 
 <p align="center"><img src="/VSDS-Tech-Docs/images/Kafka_onboarding.png"  width="60%" text-align="center"></p>
 
-This [GitHub repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) demonstrates the configuration of transferring subscribed GRAR (Building units, addresses & parcels) Kafka data stream to the published substring fragmented LDES Stream using LDES Server. As we have no control over the GRAR system, the demo uses a [JSON Data Generator](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/json-data-generator/README.md) which produces a continuous stream of addresses as an alternative to the GRAR system. Also, the Apache NIFI has standard Kafka Reader processors for subscribing to Kafka stream, please modify the [nifi-workflow.json](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/nifi-workflow.json) accordingly based on your environment. An example setup with Kafka can be as follow (GRAR.json[[DX1]](https://vlaamseoverheid.sharepoint.com/sites/Digitaal-Vlaanderen-VSDS/Gedeelde%20documenten/General/VSDS%20portaal/Tech%20docs.docx#_msocom_1) ), please modify the credentials for the Kafka topic accordingly:
+This [GitHub repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) demonstrates the configuration of transferring subscribed GRAR (Building units, addresses & parcels) Kafka data stream to the published substring fragmented LDES Stream using LDES Server. As we have no control over the GRAR system, the demo uses a [JSON Data Generator](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/json-data-generator/README.md) which produces a continuous stream of addresses as an alternative to the GRAR system. Also, the Apache NIFI has standard Kafka Reader processors for subscribing to Kafka stream, please modify the [nifi-workflow.json](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/nifi-workflow.json) accordingly based on your environment. An example setup with Kafka can be as follow ([GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GRAR.json)), please modify the credentials for the Kafka topic accordingly:
 
 To try out the demo, you need to make sure the required ports for LDES Server and NIFI are free to be used. For the details, please refer to [docker-compose.yml](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/docker-compose.yml).
 
@@ -35,7 +35,7 @@ Please follow [README.md](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-
 
 * * * * *
 
-The Apahce NiFI configuration file can be found here:  [GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GRAR.json).
+
 
 
 ##  MQTT to LDES server

@@ -43,9 +43,8 @@ Add link here:  [GRAR.json](https://github.com/samuvack/VSDS-Tech-Docs/files/GR
 
 ##  MQTT to LDES server
 
-![](/VSDS-Tech-Docs/images/MQQ.png)
 
-![](/VSDS-Tech-Docs/images/MQTT.png)
+<p align="center"><img src="/VSDS-Tech-Docs/images/MQTT.png"  width="100%" text-align="center"></p>
 
 
 ## Fiware to LDES server
@@ -54,7 +53,8 @@ The FIWARE-Orion Context Broker (OCB) can be integrated with the VSDS LDES (Link
 
 One example of this integration is demonstrated in the diagram below, which illustrates the use case of onboarding the Internet of Water (VMM) data. The details of this use case locate at [Orien Context Broker - IOW.](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/main/use-cases/iow)   
 
-![](/VSDS-Tech-Docs/images/Fiware.png)
+
+<p align="center"><img src="/images/orion_onboarding_iow.png"  width="100%" text-align="center"></p>
 
 In this case, the OCB is integrated into the LDES ecosystem to publish context updates to an LDES stream. The VSDS NIFI solution is used to translate the context data into LDES events and publish them to the LDES stream via an update attributes processor, an OSLO converter processor, and an LdesConverter process NIFI pipeline.
 

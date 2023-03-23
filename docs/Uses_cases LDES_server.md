@@ -6,7 +6,7 @@ sort: 14
 
 ##  Kafka to LDES server
 
-![](/VSDS-Tech-Docs/images/kafka.png)
+![](/images/kafka.png)
 
 [In this Github repo](https://github.com/samuvack/ldes-grar), you will find a docker file with the configuration of Apache NiFi. A data flow is configured in Apache NiFi to convert these Kafka topics into Linked Data Event Streams. You will find an [Apache NiFi configuration file](https://github.com/samuvack/ldes-grar/blob/main/NiFi_Flow.json) containing the necessary data flow.
 
@@ -19,11 +19,11 @@ sort: 14
 
 ##  MQTT to LDES server
 
-![](/VSDS-Tech-Docs/images/MQQ.png)
+![](/images/MQQ.png)
 
-![](/VSDS-Tech-Docs/images/MQTT.png)
+![](/images/MQTT.png)
 
 
 ## Fiware to LDES server
 
-![](/VSDS-Tech-Docs/images/Fiware.png)
+![](/images/Fiware.png)

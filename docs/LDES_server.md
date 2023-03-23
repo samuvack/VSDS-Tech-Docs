@@ -7,7 +7,7 @@ sort: 4
 The Linked Data Event Stream (LDES) [server](https://github.com/Informatievlaanderen/VSDS-LDESServer4J) is a configurable component that can be used to ingest, store, and (re-)publish an LDES. The LDES server was built in the context of the VSDS project to exchange Open Data easily.
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/LDES%20server.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/LDES%20server.png" width="60%" text-align="center"></p>
 
 The server can tailor its functionality to meet the organisation's specific needs. Functionalities include **retention policy**, **fragmentation** and **pagination**  for managing and processing large amounts of data more efficiently and ensuring the efficient use of storage. 
 
@@ -52,7 +52,7 @@ rest:
 
 To reduce the amount of data consumers need to replicate or to speed up certain queries, the LDES server can be configured with several fragmentations. Fragmentations are similar to indexes in databases but then published on the Web. The RDF predicate on which the fragmentation must be applied is defined through configuration.
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/fragmentation.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/fragmentation.png" width="60%" text-align="center"></p>
 
 The fragmenting of a Linked Data Event Stream (LDES) is a crucial technique for managing and processing large amounts of data more efficiently. There are three main methods of fragmentation: **geospatial**,** time-based**, and **substring** fragmentation.
 
@@ -170,7 +170,7 @@ Note that this is all lowercase.
 ### Time-based fragmentation
 [Time-based fragmentation](https://github.com/Informatievlaanderen/VSDS-LDESServer4J/tree/main/ldes-fragmentisers/ldes-fragmentisers-timebased) has not yet been implemented.
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/temporal.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/temporal.png" width="60%" text-align="center"></p>
 
 Example of a time-based fragmentation configuration file
 
@@ -203,7 +203,7 @@ for a given property should be used to create the correct relations. This is not
 
 [Geospatial fragmentation](https://github.com/Informatievlaanderen/VSDS-LDESServer4J/tree/main/ldes-fragmentisers/ldes-fragmentisers-geospatial) involves dividing the data stream into smaller pieces based on geographical information, allowing organisations to process and analyse data within specific geographic areas in real-time. 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/geospatial.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/geospatial.png" width="60%" text-align="center"></p>
 
 The geospatial fragmentation follows the "Slippy Maps" principle. A zoom level is set through configuration, and the "world" is divided into tiles based on this zoom level. The number of tiles is 2^2n^ (where n = zoom level). An RDF predicate must also be configured for this fragmentation, determining on which property of the LDES member the fragmentation should be applied ....
 
@@ -323,7 +323,7 @@ Note that the `generatedAtTime=2023-02-15T10:14:28.262Z` is an example, this can
 
 A [retention policy](https://github.com/Informatievlaanderen/VSDS-LDESServer4J#example-retention) determines how long data will be kept and stored. Its purpose is to ensure the efficient use of storage resources by controlling data growth over time. Setting a retention policy per view to minimise storage fill-up is possible.
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/retention_policy.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/retention_policy.png" width="60%" text-align="center"></p>
 
 Implementing a retention policy helps organisations maintain control over their data growth and ensure that storage resources are used optimally. The policy specifies the maximum duration that data should be kept. Currently, the only retention policy supported is time-based, which can be configured using the [ISO 8601](https://tc39.es/proposal-temporal/docs/duration.html) duration format. This time-based policy ensures that data is automatically deleted after a specified period, freeing up valuable storage space for new data.
 
@@ -366,7 +366,7 @@ ldes:
 
 An LDES server facilitate the possibility to publish and republish an LDES stream.
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/LDES%20server.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/LDES%20server.png" width="60%" text-align="center"></p>
 
 
 ## Authentication and authorisation
@@ -376,7 +376,7 @@ Authentication and authorisation enable secure data publication with restricted 
 
 In an OAuth2 gateway scenario, the gateway acts as an intermediary, handling authentication and authorisation, issuing access tokens, and granting access based on permissions.
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/authorisation.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/images/authorisation.png" width="60%" text-align="center"></p>
 
 The user is prompted to enter their login credentials, which are authenticated by the [OAuth2](https://oauth.net/2/) gateway. If authentication is successful, the user can access the LDES stream.
 

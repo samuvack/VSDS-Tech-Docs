@@ -2,7 +2,7 @@
 sort: 9
 ---
 
-# LDES Client
+# LDES CLIENT
 
 
 <p align="center"><img src="/VSDS-Tech-Docs/images/LDES%20client.png" width="60%" text-align="center"></p>

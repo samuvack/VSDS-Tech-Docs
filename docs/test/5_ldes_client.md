@@ -41,8 +41,8 @@ In addition to the functionalities above, the LDES client maintains an SQLite da
 This way, the LDES client also functions as a gatekeeper, allowing it to continue where it stopped without having to read the LDES from the beginning.
 
 
+
 ## Linked Data Interactions
-------------------------
 
 [This module](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-core/ldes-client) contains the LDES client SDK that replicates and synchronises an LDES and keeps a (non-persisted) state for that process. Wrappers can call the SDK to do the work of scheduling fragment fetching and extracting members.
 
@@ -55,6 +55,8 @@ As long as the processor runs, a queue that accepts new fragments to process is 
 It will be ignored when an attempt is made to queue a known immutable fragment. Fragments in the mutable fragment store will be queued when they're expired. Should a fragment be processed from a stream that does not set the max-age in the Cache-control header, a default expiration interval will be used to set an expiration date on the fragment.
 
 Processed members of mutable fragments are also kept in state. They are ignored if presented more than once.
+
+
 
 ## E2E Client Sink
 

@@ -14,11 +14,14 @@ sort: 14
 
 2. Make sure port 8433 is accessible
 
+![](/docs/images/Kafka_onboarding.png)
 
 
 ##  MQTT to LDES server
 
 ![](/VSDS-Tech-Docs/images/MQQ.png)
+
+![](/VSDS-Tech-Docs/images/MQTT.png)
 
 
 ## Fiware to LDES server

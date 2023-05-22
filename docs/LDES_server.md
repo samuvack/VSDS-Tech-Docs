@@ -19,14 +19,14 @@ The LDES server is available as on open-source building block on [GitHub](https:
 
 # Event Stream
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/GET_LDES.jpg" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Get_LDES.jpg" text-align="center"></p>
 
 
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/PUT_LDES.jpg" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Put_LDES.jpg" text-align="center"></p>
 
 
 

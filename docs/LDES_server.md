@@ -19,28 +19,28 @@ The LDES server is available as on open-source building block on [GitHub](https:
 
 # Event Stream
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/GET_LDES.jpg" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/GET_LDES.jpg" text-align="center"></p>
 
 
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/PUT_LDES.jpg" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/PUT_LDES.jpg" text-align="center"></p>
 
 
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_collection.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Get_collection.png" text-align="center"></p>
 
 
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Delete_Ldes.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Delete_Ldes.png" text-align="center"></p>
 
 
 
@@ -48,38 +48,38 @@ The LDES server is available as on open-source building block on [GitHub](https:
 
 # Views
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_collection.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Get_collection.png" text-align="center"></p>
 
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Put_view.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Put_view.png" text-align="center"></p>
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_config_view.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Get_config_view.png" text-align="center"></p>
 
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Delete_view.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Delete_view.png" text-align="center"></p>
 
 
 
 # Shapes
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_shape.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Get_shape.png" text-align="center"></p>
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Put_shape.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Put_shape.png" text-align="center"></p>
 
 
 # Snapshots
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Post_snapshot.png" width="60%" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Post_snapshot.png" text-align="center"></p>
 
 
 

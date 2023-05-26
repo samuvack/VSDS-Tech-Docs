@@ -2,6 +2,7 @@
 sort: 4
 ---
 
+{% swagger /api/swagger.yml %}
 
 # LDES SERVER
 

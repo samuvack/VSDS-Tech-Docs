@@ -26,7 +26,7 @@ The LDES server is available as on open-source building block on [GitHub](https:
 
 
 
-<p align="center"><img src="/VSDS-Tech-Docs/images/Put_LDES.jpg" text-align="center"></p>
+<p align="center"><img src="/VSDS-Tech-Docs/images/Put_LDES.png" text-align="center"></p>
 
 
 

@@ -8,9 +8,6 @@ sort: 4
 # LDES SERVER
 
 
-{% include swagger2.html %}
-
-
 
 The Linked Data Event Stream (LDES) [server](https://github.com/Informatievlaanderen/VSDS-LDESServer4J) is a configurable component that can be used to ingest, store, and (re-)publish an LDES. The LDES server was built in the context of the VSDS project to exchange Open Data easily.
 
@@ -23,74 +20,9 @@ To help data publishers make their datasets available as LDES, an open-source LD
 ```note
 The LDES server is available as on open-source building block on [GitHub](https://github.com/Informatievlaanderen/VSDS-LDESServer4J)
 ```
+## Swagger UI
 
-# Event Stream
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_LDES.png" text-align="center"></p>
-
-
-
-
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Put_LDES.png" text-align="center"></p>
-
-
-
-
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_collection.png" text-align="center"></p>
-
-
-
-
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Delete_Ldes.png" text-align="center"></p>
-
-
-
-
-
-# Views
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_collection.png" text-align="center"></p>
-
-
-
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Put_view.png" text-align="center"></p>
-
-
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_config_view.png" text-align="center"></p>
-
-
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Delete_view.png" text-align="center"></p>
-
-
-
-# Shapes
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Get_shape.png" text-align="center"></p>
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Put_shape.png" text-align="center"></p>
-
-
-# Snapshots
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Post_snapshot.png" text-align="center"></p>
-
-
-
-
+{% include swagger2.html %}
 
 
 ## Ingesting sources (HTTP in)

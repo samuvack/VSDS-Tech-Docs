@@ -93,7 +93,7 @@ element.style {
         color: #666666;
     }
 
-.topbar{
+.swagger-ui .topbar{
 visibility: hidden !important;
 display: none;
 }

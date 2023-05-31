@@ -4,7 +4,13 @@ sort: 4
 
 {% include swagger.html %}
 
+
 # LDES SERVER
+
+
+{% swagger /api/swagger_api.yml %}
+
+
 
 The Linked Data Event Stream (LDES) [server](https://github.com/Informatievlaanderen/VSDS-LDESServer4J) is a configurable component that can be used to ingest, store, and (re-)publish an LDES. The LDES server was built in the context of the VSDS project to exchange Open Data easily.
 

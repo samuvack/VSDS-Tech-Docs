@@ -8,7 +8,7 @@ sort: 4
 # LDES SERVER
 
 
-
+{% include swagger2.html %}
 
 
 

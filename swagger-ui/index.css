@@ -92,3 +92,8 @@ element.style {
         font-family: "FlandersArtSans-Regular";
         color: #666666;
     }
+
+.topbar{
+visibility: hidden !important;
+display: none;
+}

@@ -57,7 +57,8 @@ element.style {
 .swagger-ui .opblock-title_normal p,
 .swagger-ui .model-box-control,
 .swagger-ui .models-control,
-.swagger-ui .opblock-summary-control {
+.swagger-ui .opblock-summary-control,
+.swagger-ui .opblock .opblock-summary-description {
     font-family: "FlandersArtSans-Regular";
     color: #666666;
 }
@@ -75,3 +76,19 @@ element.style {
     font-size: 24px;
     margin: 0 0 5px;
 }
+
+.markdown-body pre>code {
+    color: lightgray;
+}
+
+.swagger-ui .markdown p,
+.swagger-ui .markdown pre,
+.swagger-ui .renderedMarkdown p,
+.swagger-ui .renderedMarkdown pre,
+.swagger-ui .opblock .opblock-section-header h4,
+.swagger-ui .opblock .opblock-section-header h1,
+.swagger-ui .opblock .opblock-section-header h2,
+.swagger-ui .opblock .opblock-section-header h3{
+        font-family: "FlandersArtSans-Regular";
+        color: #666666;
+    }

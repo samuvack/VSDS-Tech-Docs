@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: LDES Server
+  title: LDES Server API
   version: 1.0.0
 tags:
   - name: admin

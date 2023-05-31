@@ -88,7 +88,14 @@ element.style {
 .swagger-ui .opblock .opblock-section-header h4,
 .swagger-ui .opblock .opblock-section-header h1,
 .swagger-ui .opblock .opblock-section-header h2,
-.swagger-ui .opblock .opblock-section-header h3{
+.swagger-ui .opblock .opblock-section-header h3,
+.swagger-ui .btn,
+.swagger-ui .response-col_links,
+.swagger-ui .response-col_status
+
+
+{
+
         font-family: "FlandersArtSans-Regular";
         color: #666666;
     }
@@ -97,4 +104,8 @@ element.style {
 .swagger-ui .url{
 visibility: hidden !important;
 display: none;
+}
+
+.swagger-ui .opblock .opblock-summary-description{
+    font-weight: normal;
 }

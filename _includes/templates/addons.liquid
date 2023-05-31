@@ -4,9 +4,7 @@
             <i class="fa fa-book"></i> {{ site.title }}
         </div>
         <div class="branch p-1">
-            <span class="name">
-                Github
-            </span>
+
             <i class="fa fa-caret-down"></i>
         </div>
     </div>
@@ -14,15 +12,22 @@
         <dl>
             <dt>{{ __.github | default: "GitHub" }}</dt>
             <dd>
-                <a href="https://github.com/Informatievlaanderen" title="{{ __.stars | default: 'Stars' }}: {{ rest.stargazers_count }}">
+                <a href="https://github.com/Informatievlaanderen?q=VSDS&type=all&language=&sort=" title="">
                     <i class="fa fa-github"></i>
-                    {{ __.homepage | default: "Homepage" }}
+                    {{ __.homepage | default: "Github" }}
                 </a>
             </dd>
             <dd>
-                <a href="https://github.com/Informatievlaanderen/issues" title="{{ __.open_issues | default: 'Open issues' }}: {{ rest.open_issues }}">
+                <a href="https://github.com/Informatievlaanderen/VSDS-Tech-Docs/issues" title="">
                     <i class="fa fa-question-circle-o"></i>
                     {{ __.issues | default: "Issues" }}
+                </a>
+            </dd>
+            <dt>{{ __.github | default: "VSDS Portal" }}</dt>
+            <dd>
+                <a href="https://www.vlaanderen.be/vlaamse-smart-data-space-portaal" title="">
+                    <i class="fa fa-home"></i>
+                    {{ __.homepage | default: "VSDS Portal" }}
                 </a>
             </dd>
 

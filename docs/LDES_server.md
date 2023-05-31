@@ -2,24 +2,21 @@
 sort: 4
 ---
 
-
-
-
 # LDES SERVER
 
+The Linked Data Event Stream (LDES) [server](https://github.com/Informatievlaanderen/VSDS-LDESServer4J) is a configurable component that can be used to ingest, store, and (re-)publish one or multiple Linked Data Event Stream(s). The open-source LDES server is built in the context of the [VSDS project](https://www.vlaanderen.be/vlaamse-smart-data-space-portaal) to exchange (Open) Data easily.
 
-
-The Linked Data Event Stream (LDES) [server](https://github.com/Informatievlaanderen/VSDS-LDESServer4J) is a configurable component that can be used to ingest, store, and (re-)publish an LDES. The LDES server was built in the context of the VSDS project to exchange Open Data easily.
 
 <p align="center"><img src="/VSDS-Tech-Docs/images/LDES%20server.png" width="60%" text-align="center"></p>
 
-To help data publishers make their datasets available as LDES, an open-source LDES server was developed in the context of the [VSDS project](https://www.vlaanderen.be/vlaamse-smart-data-space-portaal). The server can be configured to meet the organisation's specific needs. Functionalities include **retention policy**, **fragmentation** and **pagination**  for managing and processing large amounts of data more efficiently and ensuring the efficient use of storage.
+The server can be configured to meet the organisation's specific needs. Functionalities include **retention policy**, **fragmentation**, **deletion**, **create a snapshot**  and **pagination**  for managing and processing large amounts of data more efficiently and ensuring the efficient use of storage. 
 
 ![](../images/scalableApplications.png)
 
 ```note
 The LDES server is available as on open-source building block on [GitHub](https://github.com/Informatievlaanderen/VSDS-LDESServer4J)
 ```
+
 ## Swagger UI
 
 {% include swagger2.html %}
@@ -34,6 +31,7 @@ Once the objects in the dataset are LDES-compliant members (whether or not after
 More information on the HTTP ingestion can be found [here](https://github.com/Informatievlaanderen/VSDS-LDESServer4J#example-http-ingest-fetch-configuration).
 
 Example HTTP Ingest-Fetch Configuration:
+
 
 ```yaml
 server.port: { http-port }
@@ -83,34 +81,37 @@ When applying partitioning, the LDES server will create fragments based on the o
 
 The expected parameter to apply a partioning is a `member limit`, indicating the amount of members that can be added to each page before creating a new page.
 
+
+
 ```yaml
 name: “pagination”
 config:
   memberLimit: { Mandatory: member limit > 0 }
 ```
 
+
 **Algorithm**
 
 1. The fragment to which the member should be added is determined.
    - The currently open fragment is retrieved from the database.
    - If this fragment contains members equal to or exceeding the member limit or no fragment can be found, a new fragment is created instead.
-
-2. If a new fragment is created, the following steps are taken.
-   - The new fragment becomes the new open fragment and the previous fragment becomes immutable1.
-   - This newly created fragment and the previous fragment are then linked with each other by 2 generic relationships1.
+2. If a new fragment is created, the following steps are taken. 
+   - The new fragment becomes the new open fragment and the previous fragment becomes immutable<sup>1</sup>.
+   - This newly created fragment and the previous fragment are then linked with each other by 2 generic relationships<sup>1</sup>.
    - The pagenumber of the new fragment is determined based on the old fragment or is set to 1 in case of the first fragment.
 
-1 In case of the first fragment, a previous fragment does not exist so these steps are skipped.
+<sup>1</sup> In case of the first fragment, a previous fragment does not exist so these steps are skipped.
 
 ![](content/paginationAlgorithm.png)
 
 **Example properties**
 
-```yaml
-name: "pagination"
-config:
-  memberLimit: 10
-```
+
+  ```yaml
+  name: "pagination"
+  config:
+    memberLimit: 10
+  ```
 
 <br>
 
@@ -120,7 +121,7 @@ config:
 
 ### Substring fragmentation
 
-[Substring fragmentation](https://github.com/Informatievlaanderen/VSDS-LDESServer4J/tree/main/ldes-fragmentisers/ldes-fragmentisers-substring) involves dividing the data stream into smaller pieces based on specific substrings, or patterns, within the data.
+[Substring fragmentation](https://github.com/Informatievlaanderen/VSDS-LDESServer4J/tree/main/ldes-fragmentisers/ldes-fragmentisers-substring) involves dividing the data stream into smaller pieces based on specific substrings, or patterns, within the data. 
 
 Example of substring fragmentation configuration file
 
@@ -135,12 +136,12 @@ config:
 
 Example properties:
 
-```yaml
-name: "substring"
-config:
-  fragmenterProperty: "https://data.vlaanderen.be/ns/adres#volledigAdres"
-  memberLimit: 10
-```
+  ```yaml
+  name: "substring"
+  config:
+    fragmenterProperty: "https://data.vlaanderen.be/ns/adres#volledigAdres"
+    memberLimit: 10
+  ```
 
 With following example input:
 
@@ -159,7 +160,6 @@ With following example input:
 The selected object would be "Kazernestraat 15, 9160 Lokeren".
 
 The bucket of substrings would be:
-
 - K
 - Ka
 - Kaz
@@ -174,6 +174,7 @@ In a scenario where there are already 10 addresses starting with 'k' and only 2 
 Note that this is all lowercase.
 ```
 
+
 <br>
 
 <br>
@@ -181,12 +182,13 @@ Note that this is all lowercase.
 ---
 
 ### Time-based fragmentation
-
 [Time-based fragmentation](https://github.com/Informatievlaanderen/VSDS-LDESServer4J/tree/main/ldes-fragmentisers/ldes-fragmentisers-timebased) has not yet been implemented.
 
 <p align="center"><img src="/VSDS-Tech-Docs/images/temporal.png" width="60%" text-align="center"></p>
 
 Example of a time-based fragmentation configuration file
+
+
 
 ```yaml
 name: “timebased”
@@ -199,11 +201,11 @@ This fragmentiser will create an initial fragment with the current timestamp whe
 Members are added to the fragment until the member limit is reached. When the fragment member limit is reached, a
 next fragment is created with a new current timestamp.
 
-**Reasons for deprecating this fragmentiser:**
 
+**Reasons for deprecating this fragmentiser:**
 1. This fragmentiser follows the algorithm of pagination but without the semantics.
-2. For a correct timebased fragmentation, members of the fragment should be checked and their value
-   for a given property should be used to create the correct relations. This is not the case, and there is currently no demand to have this implemented.
+2. For a correct timebased fragmentation, members of the fragment should be checked and their value 
+for a given property should be used to create the correct relations. This is not the case, and there is currently no demand to have this implemented.
 
 <br>
 
@@ -222,10 +224,10 @@ The geospatial fragmentation supported by the LDES server is based on the ["Slip
 The required configuration for this fragmentation is:
 
 1. RDF predicate on which the fragmentation should be based
+
 2. Zoom level
 
 Example of geospatial fragmentation configuration file
-
 ```yaml
 name: “geospatial”
 config:
@@ -239,27 +241,27 @@ config:
    - We filter the RDF statements where the predicate matches the `fragmenterProperty`
    - If an optional regex is provided through the `fragmenterSubjectFilter` property, we filter on subjects that match this regex.
    - We select all the object that pass the above filters.
-
-2. A bucket of tiles is created using the coordinates and provided zoomLevel. [This is done using the Slippy Map algorithm.](https://wiki.openstreetmap.org/wiki/Slippy_map)
-3. The tiles are iterated. The member is added to every tile, or sub-fragmentations of these tiles1. Taking into account:
+2. A bucket of tiles is created using the coordinates and provided zoomLevel. [This is done using the Slippy Map algorithm.](https://wiki.openstreetmap.org/wiki/Slippy_map)  
+3. The tiles are iterated. The member is added to every tile, or sub-fragmentations of these tiles<sup>1</sup>. Taking into account:
    - A new fragment is created if no fragment exists for the given tile.
    - There is no `memberLimit` or max size for a fragment. They do not become immutable.
    - The member is added to every related fragment
 
-1 If the geospatial fragmentation is not the lowest fragmentation level, the member is not added to the tile but to a subfragment on this tile. This case is included in the [example below](#when-we-have-a-timebased-sub-fragmentation-below-geospatial-fragmentation).
+<sup>1</sup> If the geospatial fragmentation is not the lowest fragmentation level, the member is not added to the tile but to a subfragment on this tile. This case is included in the [example below](#when-we-have-a-timebased-sub-fragmentation-below-geospatial-fragmentation).
 
 ![](content/geospatial_algorithm.drawio.png)
+
 
 **Example**
 
 Example properties:
 
-```yaml
-name: "geospatial"
-config:
-  maxZoomLevel: 15
-  fragmenterProperty: "http://www.opengis.net/ont/geosparql#asWKT"
-```
+  ```yaml
+  name: "geospatial"
+  config:
+    maxZoomLevel: 15
+    fragmenterProperty: "http://www.opengis.net/ont/geosparql#asWKT"
+  ```
 
 With following example input:
 
@@ -306,31 +308,30 @@ The selected objects would be
 `"POINT (5.47236 50.9642)"^^ns2:wktLiteral` and `"POINT (5.49661 50.9667)"^^ns2:wktLiteral`
 
 When we convert these [coordinates to tiles](https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Lon..2Flat._to_tile_numbers_2), the bucket of tiles would be:
-
 - "15/16884/10974"
 - "15/16882/10975"
 
-When geospatial fragmentation is the lowest level
+<ins>When geospatial fragmentation is the lowest level</ins>
 
 After ingestion the member will be part of the following two fragments
-
 - http://localhost:8080/addresses/by-zone?tile=15/16884/10974
 - http://localhost:8080/addresses/by-zone?tile=15/16882/10975
 
-When we have a timebased sub-fragmentation below geospatial fragmentation
+<ins>When we have a timebased sub-fragmentation below geospatial fragmentation</ins>
 
 After ingestion the member will be part of the following two fragments
-
 - http://localhost:8080/addresses/by-zone-and-time?tile=15/16884/10974&generatedAtTime=2023-02-15T10:14:28.262Z
 - http://localhost:8080/addresses/by-zone-and-time?tile=15/16882/10975&generatedAtTime=2023-02-15T10:14:28.262Z
 
 Note that the `generatedAtTime=2023-02-15T10:14:28.262Z` is an example, this can be any other fragmentation.
+
 
 <br>
 
 <br>
 
 ---
+
 
 #### Combining geospatial fragmentation and partioning
 
@@ -338,11 +339,14 @@ The LDES server typically adds an LDES member to the "lowest" possible fragment,
 
 ![](content/geospatial_algorithm.drawio.png)
 
+
 #### Example → TODO: create more easy example (e.g. Addresses)
+
 
 ---
 
 ## Retention policy
+
 
 A [retention policy](https://github.com/Informatievlaanderen/VSDS-LDESServer4J#example-retention) determines how long data will be kept and stored. Its purpose is to ensure the efficient use of storage resources by controlling data growth over time. Setting a retention policy per view to minimise storage fill-up is possible.
 
@@ -358,7 +362,6 @@ views:
         config:
           duration: “PT5M”
 ```
-
 duration:  "PT5M"
 
 As an example, the time-based retention configuration example above is set up to ensure that data is automatically deleted after 5 minutes (PT5M).
@@ -374,6 +377,7 @@ DCAT is a standardised RDF vocabulary to describe data catalogues on the Web, al
 The LDES server facilitates hosting DCAT metadata when publishing an LDES. Through configuration, as with the SHACL shape, it is possible to reference an existing DCAT via an URI or to provide a static file containing an RDF description of the DCAT.
 More information on configuring DCAT on the LDES Server can be found [here](https://github.com/Informatievlaanderen/VSDS-LDESServer4J#example-serving-dcat-metadata).
 
+
 ## Setup of the LDES Server
 
 To start a default LDES Server, a few basic steps are needed.
@@ -386,6 +390,9 @@ mongock:
 springdoc:
   swagger-ui:
     path: /v1/swagger
+management:
+  tracing:
+    enabled: false
 ```
 
 - Create a local `docker-compose.yml` file with the content below.
@@ -453,7 +460,9 @@ This can be updated by performing a PUT operation with an updated DCAT catalog o
 
 Finally, to delete the catalog, a DELETE request can be performed at `/admin/api/v1/dcat/{catalogID}`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ## Setting up a collection
 
@@ -474,19 +483,17 @@ server:exampleCollection a ldes:EventStream ;
     ldes:versionOfPath dcterms:isVersionOf ;
     custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
     custom:hasDefaultView "true"^^xsd:boolean ;
-    tree:shape server:shape .
-
-server:shape a sh:NodeShape ;
-   sh:nodeShape [
-     sh:closed true ;
-     sh:propertyShape []
-     ] ;
-   sh:deactivated true .
+    tree:shape [
+        sh:closed "true";
+        a sh:NodeShape ;
+    ] .
 ```
 
 This collection can be deleted by performing a DELETE request on `/admin/api/v1/eventstreams/{collectionName}`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ### Setting up metadata for collection
 
@@ -525,7 +532,9 @@ To update this entry, a PUT request can be performed on `/admin/api/v1/eventstre
 
 Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/dcat`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ## Setting up a view
 
@@ -552,7 +561,9 @@ server:view1
 
 ```
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ### Setting up metadata for view 
 
@@ -597,4 +608,7 @@ viewName:description
 
 Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```

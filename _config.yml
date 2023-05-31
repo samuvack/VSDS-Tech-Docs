@@ -9,11 +9,11 @@ description: Technical documentation of VSDS
 readme_index:
   with_frontmatter: true
 
-
 plugins:
   - jemoji
   - jekyll-avatar
   - jekyll-mentions
+  - jekyll-rdf
 
 exclude:
   - Makefile
@@ -28,3 +28,4 @@ exclude:
   - package-lock.json
   - webpack.config.js
   - jekyll-rtd-theme.gemspec
+

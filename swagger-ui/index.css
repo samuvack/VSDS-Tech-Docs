@@ -42,12 +42,14 @@ element.style {
     padding: 0;
 }
 
+/*
 .markdown-body .highlight pre,
 .markdown-body pre {
     font-size: 12px;
     border: transparent;
     background-color: transparent;
 }
+*/
 
 .swagger-ui .opblock .opblock-summary-operation-id,
 .swagger-ui .opblock .opblock-summary-path,
@@ -78,7 +80,7 @@ element.style {
 }
 
 .markdown-body pre>code {
-    color: lightgray;
+    color: #666666;
 }
 
 .swagger-ui .markdown p,
@@ -89,9 +91,7 @@ element.style {
 .swagger-ui .opblock .opblock-section-header h1,
 .swagger-ui .opblock .opblock-section-header h2,
 .swagger-ui .opblock .opblock-section-header h3,
-.swagger-ui .btn,
-.swagger-ui .response-col_links,
-.swagger-ui .response-col_status
+.swagger-ui .btn
 
 
 {

@@ -54,3 +54,17 @@ element.style {
 .swagger-ui .opblock .opblock-summary-path__deprecated {
     font-family: "FlandersArtSans-Regular";
 }
+
+.swagger-ui .info .title {
+    color: #666666;
+    font-family: "FlandersArtSans-SerifThin";
+    font-size: 36px;
+    margin: 0;
+}
+
+.swagger-ui .opblock-tag {
+    color: #666666;
+    font-family: "FlandersArtSans-SerifThin";
+    font-size: 24px;
+    margin: 0 0 5px;
+}

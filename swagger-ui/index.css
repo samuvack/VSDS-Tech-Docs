@@ -108,6 +108,7 @@ display: none;
 
 .swagger-ui .opblock .opblock-summary-description{
     font-weight: normal;
+    font-size: 16px;
 }
 
 .swagger-ui a.nostyle,

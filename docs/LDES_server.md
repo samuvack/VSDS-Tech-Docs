@@ -552,7 +552,9 @@ server:view1
 
 ```
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ### Setting up metadata for view 
 
@@ -598,5 +600,6 @@ viewName:description
 Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
 
 
-```note  Further documentation can be found on the internal Swagger API available at /v1/swagger
+```note
+Further documentation can be found on the internal Swagger API available at /v1/swagger
 ```

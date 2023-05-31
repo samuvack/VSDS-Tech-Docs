@@ -3,7 +3,7 @@ window.onload = function() {
 
   // the following lines will be replaced by docker/configurator, when it runs in a docker-container
   window.ui = SwaggerUIBundle({
-    url: "https://samuvack.github.io/VSDS-Tech-Docs/swagger-ui/LDES_server.json",
+    url: "https://gipod.smartdataspace.dev-vlaanderen.be/v1/api-docs/admin",
     dom_id: '#swagger-ui',
     deepLinking: true,
     presets: [

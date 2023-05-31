@@ -14,3 +14,15 @@ body {
     margin: 0;
     background: #fafafa;
 }
+
+.swagger-ui .topbar {
+    background-color: white;
+    padding: 10px 0;
+}
+
+.swagger-ui .info .title small pre {
+    color: gray;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}

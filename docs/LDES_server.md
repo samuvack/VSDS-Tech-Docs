@@ -2,7 +2,7 @@
 sort: 4
 ---
 
-{% include swagger.html %}
+
 
 
 # LDES SERVER

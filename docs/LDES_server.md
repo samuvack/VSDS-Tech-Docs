@@ -597,4 +597,6 @@ viewName:description
 
 Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+
+```note  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```

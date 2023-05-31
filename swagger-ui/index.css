@@ -109,3 +109,8 @@ display: none;
 .swagger-ui .opblock .opblock-summary-description{
     font-weight: normal;
 }
+
+.swagger-ui a.nostyle,
+.swagger-ui a.nostyle:visited{
+font-weight: bold;
+}

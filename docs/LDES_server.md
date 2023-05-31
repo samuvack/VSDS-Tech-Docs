@@ -376,4 +376,225 @@ More information on configuring DCAT on the LDES Server can be found [here](http
 
 ## Setup of the LDES Server
 
-A detailed description on how to setup the LDES Server can be found in the [README.md](https://github.com/Informatievlaanderen/VSDS-LDESServer4J#ldes-server) of the LDES Server GitHub repository.
+To start a default LDES Server, a few basic steps are needed.
+
+- Create a `ldes-server.yml` config file with this basic content
+
+```yaml
+mongock:
+  migration-scan-package: VSDS
+springdoc:
+  swagger-ui:
+    path: /v1/swagger
+```
+
+- Create a local `docker-compose.yml` file with the content below.
+```yaml
+version: '3.3'
+services:
+   ldes-server:
+    container_name: basic_ldes-server
+    image: ldes/ldes-server:0.0.1-SNAPSHOT
+    environment:
+      - SPRING_CONFIG_LOCATION=/config/
+    volumes:
+      - ./ldes-server.yml:/config/application.yml:ro
+     ports:
+      - 8080:8080
+     networks:
+      - ldes
+     depends_on:
+      - ldes-mongodb
+   ldes-mongodb:
+     container_name: quick_start_ldes-mongodb
+     image: mongo:6.0.4
+     ports:
+      - 27017:27017
+     networks:
+      - ldes
+networks:
+   ldes:
+      name: quick_start_network
+```
+
+-  Run `docker compose up` within the work directory of `docker-compose.yml` file to start the containers.
+
+### Setting up metadata for the server
+
+Setting up metadata for your LDES Server can be done by posting a RDF object defining a DCAT catalog to `/admin/api/v1/dcat`
+```ttl
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix org:   <http://www.w3.org/ns/org#> .
+@prefix legal: <http://www.w3.org/ns/legal#> .
+@prefix m8g:   <http://data.europa.eu/m8g/> .
+@prefix locn:  <http://www.w3.org/ns/locn#> .
+
+[] a dcat:Catalog ;
+  dct:title "My LDES'es"@en ;
+  dct:description "All LDES'es from publiser X"@en ;
+  dct:publisher <http://sample.org/company/PublisherX> .
+
+<http://sample.org/company/PublisherX> a legal:LegalEntity ;
+  foaf:name "Data Publishing Company" ;
+  legal:legalName "Data Publishing Company BV" ;
+  m8g:registeredAddress [ 
+    a locn:Address ;
+    locn:fullAddress "Some full address here"
+  ] ;
+  m8g:contactPoint [
+    a m8g:ContactPoint ;
+    m8g:hasEmail "info@data-publishing-company.com"
+  ] .
+```
+
+This can be updated by performing a PUT operation with an updated DCAT catalog on `/admin/api/v1/dcat/{catalogID}`
+
+Finally, to delete the catalog, a DELETE request can be performed at `/admin/api/v1/dcat/{catalogID}`
+
+> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+
+## Setting up a collection
+
+Setting up a collection on the LDES Server can be done by posting a RDF object defining a collection to `/admin/api/v1/eventstreams`
+
+```
+@prefix ldes: <https://w3id.org/ldes#> .
+@prefix custom: <http://example.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix tree: <https://w3id.org/tree#>.
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix server: <http://localhost:8080/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+
+server:exampleCollection a ldes:EventStream ;
+    ldes:timestampPath dcterms:created ;
+    ldes:versionOfPath dcterms:isVersionOf ;
+    custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
+    custom:hasDefaultView "true"^^xsd:boolean ;
+    tree:shape server:shape .
+
+server:shape a sh:NodeShape ;
+   sh:nodeShape [
+     sh:closed true ;
+     sh:propertyShape []
+     ] ;
+   sh:deactivated true .
+```
+
+This collection can be deleted by performing a DELETE request on `/admin/api/v1/eventstreams/{collectionName}`
+
+> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+
+### Setting up metadata for collection
+
+To add metadata to an inserted collection, one can post a DCAT dataset on `/admin/api/v1/eventstreams/{collectionName}/dcat`
+
+```
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix org:   <http://www.w3.org/ns/org#> .
+@prefix legal: <http://www.w3.org/ns/legal#> .
+@prefix m8g:   <http://data.europa.eu/m8g/> .
+@prefix locn:  <http://www.w3.org/ns/locn#> .
+
+[] a dcat:Dataset ;
+  dct:title "My LDES"@en ;
+  dct:title "Mijn LDES"@nl ;
+  dct:description "LDES for my data collection"@en ;
+  dct:description "LDES vir my data-insameling"@af ;
+  dct:creator <http://sample.org/company/MyDataOwner> .
+  
+<http://sample.org/company/MyDataOwner> a legal:LegalEntity ;
+  foaf:name "Data Company" ;
+  legal:legalName "Data Company BV" ;
+  m8g:registeredAddress [ 
+    a locn:Address ;
+    locn:fullAddress "My full address here"
+  ] ;
+  m8g:contactPoint [
+    a m8g:ContactPoint ;
+    m8g:hasEmail "info@data-company.com"
+  ] .
+```
+
+To update this entry, a PUT request can be performed on `/admin/api/v1/eventstreams/{collectionName}/dcat`.
+
+Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/dcat`
+
+> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+
+## Setting up a view
+
+Setting up a view on the LDES Server can be done by performing a PUT operation with a RDF object defining a collection to `/admin/api/v1/eventstreams/{collectionName}/views`
+
+```
+@prefix ldes: <https://w3id.org/ldes#> .
+@prefix tree: <https://w3id.org/tree#>.
+@prefix example: <http://example.org/> .
+@prefix server: <http://localhost:8080/name1/> .
+@prefix viewName: <http://localhost:8080/name1/view1/> .
+
+viewName:description
+    a <https://w3id.org/tree#ViewDescription> ;
+    ldes:retentionPolicy [
+        a ldes:retentionPolicy ;
+        example:name "timebased";
+        example:duration "10" ;
+    ] .
+
+server:view1
+        <https://w3id.org/tree#viewDescription>
+                <http://localhost:8080/name1/view1/description> .
+
+```
+
+> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+
+### Setting up metadata for view 
+
+To add metadata to an inserted view, one can perform a PUT operation with a DCAT view description and dataservice on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
+```
+@prefix tree: <https://w3id.org/tree#>.
+@prefix example: <http://example.org/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix host: <http://localhost:8080/> .
+@prefix server: <http://localhost:8080/collection/> .
+@prefix viewName: <http://localhost:8080/collection/viewName/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+server:viewName tree:viewDescription viewName:description .
+
+viewName:description
+  a       dcat:DataService , tree:ViewDescription ;
+  example:fragmentationStrategy
+          [ a  example:Fragmentation ;
+            example:name      "fragmentation" ;
+            example:pageSize  "100" ;
+            example:property  "example/property"
+          ] ;
+  dc:description "Geospatial fragmentation for my LDES"@en ;
+  dc:title "My geo-spatial view"@en ;
+  dc:license
+          [ a  dc:LicenseDocument ;
+            dc:type
+              [ a       skos:Concept ;
+                skos:prefLabel "some public license"@en
+              ]
+          ] ;
+  ldes:retentionPolicy [
+      a ldes:DurationAgoPolicy  ;
+      tree:value "PT2M"^^xsd:duration ;
+  ] ;
+  dcat:endpointURL server:viewName ;
+  dcat:servesDataset host:collection ;
+```
+
+Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
+
+> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`

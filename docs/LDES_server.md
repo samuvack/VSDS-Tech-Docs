@@ -453,7 +453,9 @@ This can be updated by performing a PUT operation with an updated DCAT catalog o
 
 Finally, to delete the catalog, a DELETE request can be performed at `/admin/api/v1/dcat/{catalogID}`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ## Setting up a collection
 
@@ -486,7 +488,9 @@ server:shape a sh:NodeShape ;
 
 This collection can be deleted by performing a DELETE request on `/admin/api/v1/eventstreams/{collectionName}`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ### Setting up metadata for collection
 
@@ -525,7 +529,9 @@ To update this entry, a PUT request can be performed on `/admin/api/v1/eventstre
 
 Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{collectionName}/dcat`
 
-> **_NOTE:_**  Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```note
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
+```
 
 ## Setting up a view
 
@@ -601,5 +607,5 @@ Similarly, a DELETE request can be performed on `/admin/api/v1/eventstreams/{col
 
 
 ```note
-Further documentation can be found on the internal Swagger API available at /v1/swagger
+Further documentation can be found on the internal Swagger API available at `/v1/swagger`
 ```

@@ -23,203 +23,239 @@ This quick start example demonstrates only a small amount of the capabilities of
 
 ### Setup an LDES Server
 
+To start a default LDES Server, a few basic steps are needed.
+
+- Create a `ldes-server.yml` config file with this basic content
+
+    ```yaml
+    mongock:
+    migration-scan-package: VSDS
+    springdoc:
+    swagger-ui:
+        path: /v1/swagger
+    management:
+    tracing:
+        enabled: false
+    ```
+
 - Create a local `docker-compose.yml` file with the content below.
-```yaml
-version: '3.3'
-services:
-   ldes-server:
-     container_name: quick_start_ldes-server
-     image: ghcr.io/informatievlaanderen/ldes-server:20230314T0913
-     environment:
-       - MANAGEMENT_TRACING_ENABLED=false
-       - SIS_DATA=/tmp
-       - SPRING_DATA_MONGODB_DATABASE=sample
-       - LDES_COLLECTIONNAME=sample
-       - LDES_MEMBERTYPE=https://www.w3.org/TR/vocab-ssn-ext/#sosa:ObservationCollection
-       - SPRING_DATA_MONGODB_HOST=ldes-mongodb
-       - SPRING_DATA_MONGODB_PORT=27017
-       - LDES_HOSTNAME=http://localhost:8080
-       - LDES_SHAPE=
-       - VIEW_TIMESTAMPPATH=http://www.w3.org/ns/prov#generatedAtTime
-       - VIEW_VERSIONOFPATH=http://purl.org/dc/terms/isVersionOf
-       - VIEWS_0_FRAGMENTATIONS_0_NAME=pagination
-       - VIEWS_0_NAME=by-page
-       - VIEWS_0_FRAGMENTATIONS_0_CONFIG_MEMBERLIMIT=1
-     ports:
-       - 8080:8080
-     networks:
-       - ldes
-     depends_on:
-       - ldes-mongodb
-   ldes-mongodb:
-     container_name: quick_start_ldes-mongodb
-     image: mongo:6.0.4
-     ports:
-       - 27017:27017
-     networks:
-       - ldes
-networks:
-   ldes:
-       name: quick_start_network
-```
+    ```yaml
+    version: '3.3'
+    services:
+    ldes-server:
+        container_name: basic_ldes-server
+        image: ldes/ldes-server:0.0.1-SNAPSHOT
+        environment:
+        - SPRING_CONFIG_LOCATION=/config/
+        volumes:
+        - ./ldes-server.yml:/config/application.yml:ro
+        ports:
+        - 8080:8080
+        networks:
+        - ldes
+        depends_on:
+        - ldes-mongodb
+    ldes-mongodb:
+        container_name: quick_start_ldes-mongodb
+        image: mongo:6.0.4
+        ports:
+        - 27017:27017
+        networks:
+        - ldes
+    ldio-workbench:
+        container_name: basic_ldes-replication
+        image: ldes/ldi-orchestrator:0.0.1-SNAPSHOT
+        environment:
+        - SPRING_CONFIG_NAME=application
+        - SPRING_CONFIG_LOCATION=/config/
+        volumes:
+        - ./ldio.yml:/config/application.yml:ro
+        ports:
+        - ${LDIO_WORKBENCH_PORT:-8081}:8080
+        networks:
+        - ldes 
+        profiles:
+        - delay-started
+    networks:
+    ldes:
+        name: quick_start_network
+    ```
 
 -  Run `docker compose up` within the work directory of `.yml` file, to start the containers.
 -  The LDES Server is now available at port `8080` and accepts members via `HTTP POST` requests.
-- Browse to [http://localhost:8080/sample](http://localhost:8080/sample) to have a first look.
+-  We will now configure the LDES Server. (note that this part can also be done with the Swagger endpoint (`/v1/swagger`), where more detailed documentation is available)
 
-_The result should be as follow:_
+-  Firstly, let's add collection for our mobility hindrances. This will be used to replicate the dataset from GIPOD:
+    - A collection name "mobility-hindrances"
+    - Will process members of type "https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder"
+    - Will have a default view, which provides a basic view using a paginated fragmention. This also enables snapshotting.
 
-```turtle
-@prefix ldes:   <https://w3id.org/ldes#> .
-@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix sample: <http://localhost:8080/sample/> .
-@prefix tree:   <https://w3id.org/tree#> .
-<http://localhost:8080/sample>
-        rdf:type   ldes:EventStream ;
-        tree:view  sample:by-page .
-sample:by-page  rdf:type  tree:Node .
-```
+    ```bash
+    curl -X 'PUT' 'http://localhost:8080/admin/api/v1/eventstreams' \
+    -H 'accept: text/turtle' \
+    -H 'Content-Type: text/turtle' \
+    --data-raw '@prefix ldes: <https://w3id.org/ldes#> .
+        @prefix custom: <http://example.org/> .
+        @prefix dcterms: <http://purl.org/dc/terms/> .
+        @prefix tree: <https://w3id.org/tree#>.
+        @prefix sh:   <http://www.w3.org/ns/shacl#> .
+        @prefix server: <http://localhost:8080/> .
+        @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+
+        server:mobility-hindrances a ldes:EventStream ;
+            ldes:timestampPath dcterms:created ;
+            ldes:versionOfPath dcterms:isVersionOf ;
+            custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
+            custom:hasDefaultView "true"^^xsd:boolean ;
+            tree:shape [
+                a sh:NodeShape ;
+            ] .
+        '
+    ```
+-  Next, let's add a second collection to collect observations:
+    - A collection name "observations"
+    - Will process members of type "https://data.vlaanderen.be/ns/mobiliteit#ObservationCollection"
+    - Will have a default view, which provides a basic view using a paginated fragmention. This also enables snapshotting.
+
+    ```bash
+    curl -X 'PUT' 'http://localhost:8080/admin/api/v1/eventstreams' \
+    -H 'accept: text/turtle' \
+    -H 'Content-Type: text/turtle' \
+    --data-raw '@prefix ldes: <https://w3id.org/ldes#> .
+    @prefix custom: <http://example.org/> .
+    @prefix dcterms: <http://purl.org/dc/terms/> .
+    @prefix tree: <https://w3id.org/tree#>.
+    @prefix sh:   <http://www.w3.org/ns/shacl#> .
+    @prefix server: <http://localhost:8080/> .
+    @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+
+    server:observations a ldes:EventStream ;
+        ldes:timestampPath dcterms:created ;
+        ldes:versionOfPath dcterms:isVersionOf ;
+        custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#ObservationCollection> ;
+        custom:hasDefaultView "true"^^xsd:boolean ;
+        tree:shape [
+            a sh:NodeShape ;
+        ] .
+    '
+    ```
+
+- Adding timebased view for mobility-hindrances collection
+    - Adding a retention policy which will remove members older than 2 months.
+    - Setting a timebased fragmentation strategy. This will fragment the members based on their timebased property. This value is by default set to `http://www.w3.org/ns/prov#generatedAtTime`
+
+    ```bash
+    curl -X 'PUT' \
+    'http://localhost:8080/admin/api/v1/eventstreams/mobility-hindrances/views' \
+    -H 'accept: */*' \
+    -H 'Content-Type: text/turtle' \
+    --data-raw '@prefix ldes: <https://w3id.org/ldes#> .
+        @prefix tree: <https://w3id.org/tree#>.
+        @prefix example: <http://example.org/> .
+        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+        @prefix server: <http://localhost:8080/mobility-hindrances/> .
+
+        server:time-based tree:viewDescription [
+            ldes:retentionPolicy [
+                a ldes:DurationAgoPolicy  ;
+                tree:value "PT2M"^^xsd:duration ;
+            ] ;
+            example:fragmentationStrategy [
+                a example:Fragmentation ;
+                example:name "timebased" ;
+                example:memberLimit "20" ;
+            ] ;
+        ] .'
+    ```
 
 ### Add data to the LDES Server
 
--  Create a `sample.ttl` file with the following content:
+-  Create a `observation.ttl` file with the following content:
 
-```turtle
-@prefix dc: <http://purl.org/dc/terms/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix sosa: <http://www.w3.org/ns/sosa/> .
-@prefix ns0: <http://def.isotc211.org/iso19156/2011/SamplingFeature#SF_SamplingFeatureCollection.> .
-@prefix ns1: <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.> .
-@prefix ns2: <http://def.isotc211.org/iso19103/2005/UnitsOfMeasure#Measure.> .
-@prefix ns3: <https://schema.org/> .
+    ```turtle
+    @prefix dc: <http://purl.org/dc/terms/> .
+    @prefix prov: <http://www.w3.org/ns/prov#> .
+    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+    @prefix sosa: <http://www.w3.org/ns/sosa/> .
+    @prefix ns0: <http://def.isotc211.org/iso19156/2011/SamplingFeature#SF_SamplingFeatureCollection.> .
+    @prefix ns1: <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.> .
+    @prefix ns2: <http://def.isotc211.org/iso19103/2005/UnitsOfMeasure#Measure.> .
+    @prefix ns3: <https://schema.org/> .
 
-<urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z>
-  dc:isVersionOf <urn:ngsi-ld:WaterQualityObserved:woq:1> ;
-  prov:generatedAtTime "2023-03-12T18:31:17.003Z"^^xsd:dateTime ;
-  sosa:hasFeatureOfInterest "spt-00035-79" ;
-  ns0:member <https://data.vmm.be/id/loc-00019-33>, [
-    sosa:madeBySensor <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> ;
-    ns1:result [ ns2:value [
-        ns3:value 2.043000e+1 ;
-        ns3:unitCode <https://data.vmm.be/id/CEL>
-      ] ] ;
-    ns1:phenomenonTime "2023-03-12T18:31:17.003Z"^^xsd:datetime ;
-    ns1:observedProperty <https://data.vmm.be/concept/waterkwaliteitparameter/temperatuur> ;
-    ns1:featureOfInterest <https://data.vmm.be/id/spt-00035-79> ;
-    a <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement>
-  ], [
-    sosa:madeBySensor <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> ;
-    ns1:result [ ns2:value [
-        ns3:value 1442 ;
-        ns3:unitCode <https://data.vmm.be/id/HP>
-      ] ] ;
-    ns1:phenomenonTime "2023-03-12T18:31:17.003Z"^^xsd:datetime ;
-    ns1:observedProperty <https://data.vmm.be/concept/observatieparameter/hydrostatische-druk> ;
-    ns1:featureOfInterest <https://data.vmm.be/id/spt-00035-79> ;
-    a <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement>
-  ], [
-    sosa:madeBySensor <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> ;
-    ns1:result [ ns2:value [
-        ns3:value 6150 ;
-        ns3:unitCode <https://data.vmm.be/id/G42>
-      ] ] ;
-    ns1:phenomenonTime "2023-03-12T18:31:17.003Z"^^xsd:datetime ;
-    ns1:observedProperty <https://data.vmm.be/concept/waterkwaliteitparameter/conductiviteit> ;
-    ns1:featureOfInterest <https://data.vmm.be/id/spt-00035-79> ;
-    a <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement>
-  ] ;
-  a <https://www.w3.org/TR/vocab-ssn-ext/#sosa:ObservationCollection> .
+    <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z>
+    dc:isVersionOf <urn:ngsi-ld:WaterQualityObserved:woq:1> ;
+    prov:generatedAtTime "2023-03-12T18:31:17.003Z"^^xsd:dateTime ;
+    sosa:hasFeatureOfInterest "spt-00035-79" ;
+    ns0:member <https://data.vmm.be/id/loc-00019-33>, [
+        sosa:madeBySensor <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> ;
+        ns1:result [ ns2:value [
+            ns3:value 2.043000e+1 ;
+            ns3:unitCode <https://data.vmm.be/id/CEL>
+        ] ] ;
+        ns1:phenomenonTime "2023-03-12T18:31:17.003Z"^^xsd:datetime ;
+        ns1:observedProperty <https://data.vmm.be/concept/waterkwaliteitparameter/temperatuur> ;
+        ns1:featureOfInterest <https://data.vmm.be/id/spt-00035-79> ;
+        a <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement>
+    ], [
+        sosa:madeBySensor <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> ;
+        ns1:result [ ns2:value [
+            ns3:value 1442 ;
+            ns3:unitCode <https://data.vmm.be/id/HP>
+        ] ] ;
+        ns1:phenomenonTime "2023-03-12T18:31:17.003Z"^^xsd:datetime ;
+        ns1:observedProperty <https://data.vmm.be/concept/observatieparameter/hydrostatische-druk> ;
+        ns1:featureOfInterest <https://data.vmm.be/id/spt-00035-79> ;
+        a <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement>
+    ], [
+        sosa:madeBySensor <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> ;
+        ns1:result [ ns2:value [
+            ns3:value 6150 ;
+            ns3:unitCode <https://data.vmm.be/id/G42>
+        ] ] ;
+        ns1:phenomenonTime "2023-03-12T18:31:17.003Z"^^xsd:datetime ;
+        ns1:observedProperty <https://data.vmm.be/concept/waterkwaliteitparameter/conductiviteit> ;
+        ns1:featureOfInterest <https://data.vmm.be/id/spt-00035-79> ;
+        a <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement>
+    ] ;
+    a <https://data.vlaanderen.be/ns/mobiliteit#ObservationCollection> .
 
-<https://data.vmm.be/id/loc-00019-33> a <http://def.isotc211.org/iso19156/2011/SpatialSamplingFeature#SF_SpatialSamplingFeature> .
-```
+    <https://data.vmm.be/id/loc-00019-33> a <http://def.isotc211.org/iso19156/2011/SpatialSamplingFeature#SF_SpatialSamplingFeature> .
+    ```
 
-- Please run ```curl -X POST http://localhost:8080/sample -H "Content-Type: application/ttl" -d "@sample.ttl" ``` to post the `sample.ttl` to the LDES Server.
+- Run the following command to post the `observation.ttl` to the LDES Server.
 
-- The data is added to the LDES Server and part of the LDES.
-- Browse to <http://localhost:8080/sample> to have a look.
+    ```bash
+    curl -X POST http://localhost:8080/observation -H "Content-Type: application/ttl" -d "@observation.ttl" 
+    ``` 
 
-_The result should be as follow:_
+### Replicating an LDES using the LDES Client
 
-```turtle
-@prefix ldes:   <https://w3id.org/ldes#> .
-@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix sample: <http://localhost:8080/sample/> .
-@prefix tree:   <https://w3id.org/tree#> .
+- Create a `ldio.yaml` file in the same directory as your `docker-compose.yml` with the following content:
 
-<http://localhost:8080/sample>
-        rdf:type   ldes:EventStream ;
-        tree:view  sample:by-page .
+    ```yaml
+    orchestrator:
+    pipelines:
+      - name: gipod-replicator
+        description: "HTTP polling, OSLO transformation, version creation & HTTP sending."
+        input:
+            name: be.vlaanderen.informatievlaanderen.ldes.ldi.client.LdioLdesClient
+            config:
+                url: https://private-api.gipod.vlaanderen.be/api/v1/ldes/mobility-hindrances
+        outputs:
+          - name: be.vlaanderen.informatievlaanderen.ldes.ldio.LdioHttpOut
+            config:
+                endpoint: http://ldes-server:8080/mobility-hindrances
+                content-type: application/n-quads
+    ```
+- Execute the following command to start up the LDIO `docker compose up ldio-workbench -d`
 
-sample:by-page  rdf:type  tree:Node ;
-        tree:relation  [ rdf:type   tree:Relation ;
-                         tree:node  <http://localhost:8080/sample/by-page?pageNumber=1>
-                       ] .
- ```      
-The LDES view `by-page` now contains a relation to a fragment containing the LDES member described in `sample.ttl`. Follow the `tree:node` <http://localhost:8080/sample/by-page?pageNumber=1> to visit the first page of the LDES view <http://localhost:8080/sample/by-page>.
-
-### Replicate an LDES with the LDES Client
-
-- Create a `docker-compose.yml` file or extend the previous one with the following content:
-```yaml
-version: '3.3'
-services:
-      ldes-cli:
-            image: ghcr.io/informatievlaanderen/ldes-cli:20230222T0959
-            container_name: quick-start_ldes-client-cli
-            command: "--url http://localhost:8080/sample/by-page --input-format text/turtle"
-            network_mode: host
-```
-
-- Run `docker compose up ` to start the LDES Client docker container.
-- The LDES Client will use the LDES view <http://localhost:8080/sample/by-page> to replicate LDES member and output them to the console of the `ldes-cli` docker container.
-
-```
-2023-03-12 21:48:00 [pool-1-thread-1] INFO be.vlaanderen.informatievlaanderen.ldes.client.cli.services.FragmentProcessor - Fragment http://localhost:8080/sample/by-page has 0 member(s)
-   2023-03-12 21:48:00 [pool-1-thread-1] INFO be.vlaanderen.informatievlaanderen.ldes.client.cli.services.FragmentProcessor - Fragment http://localhost:8080/sample/by-page?pageNumber=1 has 1 member(s)
-   2023-03-12 21:48:01 _:B1e68397745bc55c40e0c5eadca8646e0 <https://schema.org/unitCode> <https://data.vmm.be/id/HP> .
-   2023-03-12 21:48:01 _:B1e68397745bc55c40e0c5eadca8646e0 <https://schema.org/value> "1442"^^<http://www.w3.org/2001/XMLSchema#integer> .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://www.w3.org/TR/vocab-ssn-ext/#sosa:ObservationCollection> .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://def.isotc211.org/iso19156/2011/SamplingFeature#SF_SamplingFeatureCollection.member> <https://data.vmm.be/id/loc-00019-33> .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://def.isotc211.org/iso19156/2011/SamplingFeature#SF_SamplingFeatureCollection.member> _:Bf2d869f7dc0b939c5b6016ac7d1c451c .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://def.isotc211.org/iso19156/2011/SamplingFeature#SF_SamplingFeatureCollection.member> _:B505977c4390a72ab0da767101451604d .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://def.isotc211.org/iso19156/2011/SamplingFeature#SF_SamplingFeatureCollection.member> _:Bdc3ef60306183fa17844d907314f40ee .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://purl.org/dc/terms/isVersionOf> <urn:ngsi-ld:WaterQualityObserved:woq:1> .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://www.w3.org/ns/prov#generatedAtTime> "2023-03-12T18:31:17.003Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
-   2023-03-12 21:48:01 <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> <http://www.w3.org/ns/sosa/hasFeatureOfInterest> "spt-00035-79" .
-   2023-03-12 21:48:01 _:B1e0a50c94effea51ea151d334d1d70a4 <https://schema.org/unitCode> <https://data.vmm.be/id/CEL> .
-   2023-03-12 21:48:01 _:B1e0a50c94effea51ea151d334d1d70a4 <https://schema.org/value> "2.043000e+1"^^<http://www.w3.org/2001/XMLSchema#double> .
-   2023-03-12 21:48:01 _:Bdc3ef60306183fa17844d907314f40ee <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement> .
-   2023-03-12 21:48:01 _:Bdc3ef60306183fa17844d907314f40ee <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.featureOfInterest> <https://data.vmm.be/id/spt-00035-79> .
-   2023-03-12 21:48:01 _:Bdc3ef60306183fa17844d907314f40ee <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.observedProperty> <https://data.vmm.be/concept/waterkwaliteitparameter/temperatuur> .
-   2023-03-12 21:48:01 _:Bdc3ef60306183fa17844d907314f40ee <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.phenomenonTime> "2023-03-12T18:31:17.003Z"^^<http://www.w3.org/2001/XMLSchema#datetime> .
-   2023-03-12 21:48:01 _:Bdc3ef60306183fa17844d907314f40ee <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.result> _:B0d2c29f506d81bb4b3ae1170f6b7ae96 .
-   2023-03-12 21:48:01 _:Bdc3ef60306183fa17844d907314f40ee <http://www.w3.org/ns/sosa/madeBySensor> <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> .
-   2023-03-12 21:48:01 _:B505977c4390a72ab0da767101451604d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement> .
-   2023-03-12 21:48:01 _:B505977c4390a72ab0da767101451604d <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.featureOfInterest> <https://data.vmm.be/id/spt-00035-79> .
-   2023-03-12 21:48:01 _:B505977c4390a72ab0da767101451604d <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.observedProperty> <https://data.vmm.be/concept/observatieparameter/hydrostatische-druk> .
-   2023-03-12 21:48:01 _:B505977c4390a72ab0da767101451604d <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.phenomenonTime> "2023-03-12T18:31:17.003Z"^^<http://www.w3.org/2001/XMLSchema#datetime> .
-   2023-03-12 21:48:01 _:B505977c4390a72ab0da767101451604d <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.result> _:B8e72081a21073160d62ed708aed78a23 .
-   2023-03-12 21:48:01 _:B505977c4390a72ab0da767101451604d <http://www.w3.org/ns/sosa/madeBySensor> <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> .
-   2023-03-12 21:48:01 _:B8e72081a21073160d62ed708aed78a23 <http://def.isotc211.org/iso19103/2005/UnitsOfMeasure#Measure.value> _:B1e68397745bc55c40e0c5eadca8646e0 .
-   2023-03-12 21:48:01 _:B22abd0fb7f46cf69b7367d7743860b0a <http://def.isotc211.org/iso19103/2005/UnitsOfMeasure#Measure.value> _:B66dbb43f4c55b6a44e931289145be554 .
-   2023-03-12 21:48:01 <https://data.vmm.be/id/loc-00019-33> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://def.isotc211.org/iso19156/2011/SpatialSamplingFeature#SF_SpatialSamplingFeature> .
-   2023-03-12 21:48:01 <http://localhost:8080/sample> <https://w3id.org/tree#member> <urn:ngsi-ld:WaterQualityObserved:woq:1/2023-03-12T18:31:17.003Z> .
-   2023-03-12 21:48:01 _:B0d2c29f506d81bb4b3ae1170f6b7ae96 <http://def.isotc211.org/iso19103/2005/UnitsOfMeasure#Measure.value> _:B1e0a50c94effea51ea151d334d1d70a4 .
-   2023-03-12 21:48:01 _:Bf2d869f7dc0b939c5b6016ac7d1c451c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://def.isotc211.org/iso19156/2011/Measurement#OM_Measurement> .
-   2023-03-12 21:48:01 _:Bf2d869f7dc0b939c5b6016ac7d1c451c <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.featureOfInterest> <https://data.vmm.be/id/spt-00035-79> .
-   2023-03-12 21:48:01 _:Bf2d869f7dc0b939c5b6016ac7d1c451c <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.observedProperty> <https://data.vmm.be/concept/waterkwaliteitparameter/conductiviteit> .
-   2023-03-12 21:48:01 _:Bf2d869f7dc0b939c5b6016ac7d1c451c <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.phenomenonTime> "2023-03-12T18:31:17.003Z"^^<http://www.w3.org/2001/XMLSchema#datetime> .
-   2023-03-12 21:48:01 _:Bf2d869f7dc0b939c5b6016ac7d1c451c <http://def.isotc211.org/iso19156/2011/Observation#OM_Observation.result> _:B22abd0fb7f46cf69b7367d7743860b0a .
-   2023-03-12 21:48:01 _:Bf2d869f7dc0b939c5b6016ac7d1c451c <http://www.w3.org/ns/sosa/madeBySensor> <urn:ngsi-v2:cot-imec-be:Device:imec-iow-UR5gEycRuaafxnhvjd9jnU> .
-   2023-03-12 21:48:01 _:B66dbb43f4c55b6a44e931289145be554 <https://schema.org/unitCode> <https://data.vmm.be/id/G42> .
-   2023-03-12 21:48:01 _:B66dbb43f4c55b6a44e931289145be554 <https://schema.org/value> "6150"^^<http://www.w3.org/2001/XMLSchema#integer> .
-```
-
+- Validate your LDES server is being populated by going to `http://localhost:8080/mobility-hindrances/by-page?pageNumber=1` and `http://localhost:8080/mobility-hindrances/time-based`. These streams should fill up as the LDES Client send members to your server.
 
 ### Tear down the infrastructure and remove the volumes
 
-Within the working directory, please run `docker rm -f $(docker ps -a -q)`
+- Within the working directory, please run `docker rm -f $(docker ps -a -q)`
 
 
 ## LDES2Service

@@ -390,6 +390,9 @@ mongock:
 springdoc:
   swagger-ui:
     path: /v1/swagger
+management:
+  tracing:
+    enabled: false
 ```
 
 - Create a local `docker-compose.yml` file with the content below.
@@ -480,14 +483,10 @@ server:exampleCollection a ldes:EventStream ;
     ldes:versionOfPath dcterms:isVersionOf ;
     custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
     custom:hasDefaultView "true"^^xsd:boolean ;
-    tree:shape server:shape .
-
-server:shape a sh:NodeShape ;
-   sh:nodeShape [
-     sh:closed true ;
-     sh:propertyShape []
-     ] ;
-   sh:deactivated true .
+    tree:shape [
+        sh:closed "true";
+        a sh:NodeShape ;
+    ] .
 ```
 
 This collection can be deleted by performing a DELETE request on `/admin/api/v1/eventstreams/{collectionName}`

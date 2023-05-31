@@ -93,7 +93,8 @@ element.style {
         color: #666666;
     }
 
-.swagger-ui .topbar{
+.swagger-ui .topbar,
+.swagger-ui .url{
 visibility: hidden !important;
 display: none;
 }

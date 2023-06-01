@@ -136,12 +136,12 @@ config:
 
 Example properties:
 
-  ```yaml
-  name: "substring"
-  config:
-    fragmenterProperty: "https://data.vlaanderen.be/ns/adres#volledigAdres"
-    memberLimit: 10
-  ```
+```yaml
+name: "substring"
+config:
+  fragmenterProperty: "https://data.vlaanderen.be/ns/adres#volledigAdres"
+  memberLimit: 10
+```
 
 With following example input:
 
@@ -256,12 +256,12 @@ config:
 
 Example properties:
 
-  ```yaml
-  name: "geospatial"
-  config:
-    maxZoomLevel: 15
-    fragmenterProperty: "http://www.opengis.net/ont/geosparql#asWKT"
-  ```
+```yaml
+name: "geospatial"
+config:
+  maxZoomLevel: 15
+  fragmenterProperty: "http://www.opengis.net/ont/geosparql#asWKT"
+```
 
 With following example input:
 
@@ -429,7 +429,7 @@ networks:
 ### Setting up metadata for the server
 
 Setting up metadata for your LDES Server can be done by posting a RDF object defining a DCAT catalog to `/admin/api/v1/dcat`
-```ttl
+```turtle
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
@@ -468,7 +468,7 @@ Further documentation can be found on the internal Swagger API available at `/v1
 
 Setting up a collection on the LDES Server can be done by posting a RDF object defining a collection to `/admin/api/v1/eventstreams`
 
-```ttl
+```turtle
 @prefix ldes: <https://w3id.org/ldes#> .
 @prefix custom: <http://example.org/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
@@ -499,7 +499,7 @@ Further documentation can be found on the internal Swagger API available at `/v1
 
 To add metadata to an inserted collection, one can post a DCAT dataset on `/admin/api/v1/eventstreams/{collectionName}/dcat`
 
-```ttl
+```turtle
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
@@ -540,7 +540,7 @@ Further documentation can be found on the internal Swagger API available at `/v1
 
 Setting up a view on the LDES Server can be done by performing a PUT operation with a RDF object defining a collection to `/admin/api/v1/eventstreams/{collectionName}/views`
 
-```ttl
+```turtle
 @prefix ldes: <https://w3id.org/ldes#> .
 @prefix tree: <https://w3id.org/tree#>.
 @prefix example: <http://example.org/> .
@@ -568,7 +568,7 @@ Further documentation can be found on the internal Swagger API available at `/v1
 ### Setting up metadata for view 
 
 To add metadata to an inserted view, one can perform a PUT operation with a DCAT view description and dataservice on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
-```ttl
+```turtle
 @prefix tree: <https://w3id.org/tree#>.
 @prefix example: <http://example.org/> .
 @prefix dc: <http://purl.org/dc/terms/> .

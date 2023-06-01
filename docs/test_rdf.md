@@ -1,6 +1,5 @@
-
 ---
-sort: 20
+sort: 0
 ---
 
 # RDF syntax

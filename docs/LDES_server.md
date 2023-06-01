@@ -145,7 +145,7 @@ config:
 
 With following example input:
 
-```ttl
+```turtle
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -265,43 +265,43 @@ config:
 
 With following example input:
 
-```ttl
-@prefix dc: <http://purl.org/dc/terms/> .
-@prefix ns0: <http://semweb.mmlab.be/ns/linkedconnections#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix ns1: <http://vocab.gtfs.org/terms#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix ns2: <http://www.opengis.net/ont/geosparql#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+  ```turtle
+  @prefix dc: <http://purl.org/dc/terms/> .
+  @prefix ns0: <http://semweb.mmlab.be/ns/linkedconnections#> .
+  @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+  @prefix ns1: <http://vocab.gtfs.org/terms#> .
+  @prefix prov: <http://www.w3.org/ns/prov#> .
+  @prefix ns2: <http://www.opengis.net/ont/geosparql#> .
+  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+  @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 
-<http://njh.me/original-id#2022-09-28T17:11:28.520Z>
-  dc:isVersionOf <http://njh.me/original-id> ;
-  ns0:arrivalStop <http://example.org/stops/402161> ;
-  ns0:arrivalTime "2022-09-28T07:14:00.000Z"^^xsd:dateTime ;
-  ns0:departureStop <http://example.org/stops/402303> ;
-  ns0:departureTime "2022-09-28T07:09:00.000Z"^^xsd:dateTime ;
-  ns1:dropOffType ns1:Regular ;
-  ns1:pickupType ns1:Regular ;
-  ns1:route <http://example.org/routes/Hasselt_-_Genk> ;
-  ns1:trip <http://example.org/trips/Hasselt_-_Genk/Genk_-_Hasselt/20220928T0909> ;
-  a ns0:Connection ;
-  prov:generatedAtTime "2022-09-28T17:11:28.520Z"^^xsd:dateTime .
+  <http://njh.me/original-id#2022-09-28T17:11:28.520Z>
+    dc:isVersionOf <http://njh.me/original-id> ;
+    ns0:arrivalStop <http://example.org/stops/402161> ;
+    ns0:arrivalTime "2022-09-28T07:14:00.000Z"^^xsd:dateTime ;
+    ns0:departureStop <http://example.org/stops/402303> ;
+    ns0:departureTime "2022-09-28T07:09:00.000Z"^^xsd:dateTime ;
+    ns1:dropOffType ns1:Regular ;
+    ns1:pickupType ns1:Regular ;
+    ns1:route <http://example.org/routes/Hasselt_-_Genk> ;
+    ns1:trip <http://example.org/trips/Hasselt_-_Genk/Genk_-_Hasselt/20220928T0909> ;
+    a ns0:Connection ;
+    prov:generatedAtTime "2022-09-28T17:11:28.520Z"^^xsd:dateTime .
 
-<http://example.org/stops/402161>
-  ns2:asWKT "POINT (5.47236 50.9642)"^^ns2:wktLiteral ;
-  a ns1:Stop ;
-  rdfs:label "Genk Brug" ;
-  geo:lat 5.096420e+1 ;
-  geo:long 5.472360e+0 .
+  <http://example.org/stops/402161>
+    ns2:asWKT "POINT (5.47236 50.9642)"^^ns2:wktLiteral ;
+    a ns1:Stop ;
+    rdfs:label "Genk Brug" ;
+    geo:lat 5.096420e+1 ;
+    geo:long 5.472360e+0 .
 
-<http://example.org/stops/402303>
-  ns2:asWKT "POINT (5.49661 50.9667)"^^ns2:wktLiteral ;
-  a ns1:Stop ;
-  rdfs:label "Genk Station perron 11" ;
-  geo:lat 5.096670e+1 ;
-  geo:long 5.496610e+0 .
-```
+  <http://example.org/stops/402303>
+    ns2:asWKT "POINT (5.49661 50.9667)"^^ns2:wktLiteral ;
+    a ns1:Stop ;
+    rdfs:label "Genk Station perron 11" ;
+    geo:lat 5.096670e+1 ;
+    geo:long 5.496610e+0 .
+  ```
 
 The selected objects would be
 
@@ -429,32 +429,33 @@ networks:
 ### Setting up metadata for the server
 
 Setting up metadata for your LDES Server can be done by posting a RDF object defining a DCAT catalog to `/admin/api/v1/dcat`
-```turtle
-@prefix dct:   <http://purl.org/dc/terms/> .
-@prefix dcat:  <http://www.w3.org/ns/dcat#> .
-@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
-@prefix org:   <http://www.w3.org/ns/org#> .
-@prefix legal: <http://www.w3.org/ns/legal#> .
-@prefix m8g:   <http://data.europa.eu/m8g/> .
-@prefix locn:  <http://www.w3.org/ns/locn#> .
 
-[] a dcat:Catalog ;
-  dct:title "My LDES'es"@en ;
-  dct:description "All LDES'es from publiser X"@en ;
-  dct:publisher <http://sample.org/company/PublisherX> .
+  ```turtle
+  @prefix dct:   <http://purl.org/dc/terms/> .
+  @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+  @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+  @prefix org:   <http://www.w3.org/ns/org#> .
+  @prefix legal: <http://www.w3.org/ns/legal#> .
+  @prefix m8g:   <http://data.europa.eu/m8g/> .
+  @prefix locn:  <http://www.w3.org/ns/locn#> .
 
-<http://sample.org/company/PublisherX> a legal:LegalEntity ;
-  foaf:name "Data Publishing Company" ;
-  legal:legalName "Data Publishing Company BV" ;
-  m8g:registeredAddress [ 
-    a locn:Address ;
-    locn:fullAddress "Some full address here"
-  ] ;
-  m8g:contactPoint [
-    a m8g:ContactPoint ;
-    m8g:hasEmail "info@data-publishing-company.com"
-  ] .
-```
+  [] a dcat:Catalog ;
+    dct:title "My LDES'es"@en ;
+    dct:description "All LDES'es from publiser X"@en ;
+    dct:publisher <http://sample.org/company/PublisherX> .
+
+  <http://sample.org/company/PublisherX> a legal:LegalEntity ;
+    foaf:name "Data Publishing Company" ;
+    legal:legalName "Data Publishing Company BV" ;
+    m8g:registeredAddress [ 
+      a locn:Address ;
+      locn:fullAddress "Some full address here"
+    ] ;
+    m8g:contactPoint [
+      a m8g:ContactPoint ;
+      m8g:hasEmail "info@data-publishing-company.com"
+    ] .
+  ```
 
 This can be updated by performing a PUT operation with an updated DCAT catalog on `/admin/api/v1/dcat/{catalogID}`
 
@@ -468,26 +469,26 @@ Further documentation can be found on the internal Swagger API available at `/v1
 
 Setting up a collection on the LDES Server can be done by posting a RDF object defining a collection to `/admin/api/v1/eventstreams`
 
-```turtle
-@prefix ldes: <https://w3id.org/ldes#> .
-@prefix custom: <http://example.org/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix tree: <https://w3id.org/tree#>.
-@prefix sh:   <http://www.w3.org/ns/shacl#> .
-@prefix server: <http://localhost:8080/> .
-@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+  ```turtle
+  @prefix ldes: <https://w3id.org/ldes#> .
+  @prefix custom: <http://example.org/> .
+  @prefix dcterms: <http://purl.org/dc/terms/> .
+  @prefix tree: <https://w3id.org/tree#>.
+  @prefix sh:   <http://www.w3.org/ns/shacl#> .
+  @prefix server: <http://localhost:8080/> .
+  @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 
-server:exampleCollection a ldes:EventStream ;
-    ldes:timestampPath dcterms:created ;
-    ldes:versionOfPath dcterms:isVersionOf ;
-    custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
-    custom:hasDefaultView "true"^^xsd:boolean ;
-    tree:shape [
-        sh:closed "true";
-        a sh:NodeShape ;
-    ] .
-```
+  server:exampleCollection a ldes:EventStream ;
+      ldes:timestampPath dcterms:created ;
+      ldes:versionOfPath dcterms:isVersionOf ;
+      custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
+      custom:hasDefaultView "true"^^xsd:boolean ;
+      tree:shape [
+          sh:closed "true";
+          a sh:NodeShape ;
+      ] .
+  ```
 
 This collection can be deleted by performing a DELETE request on `/admin/api/v1/eventstreams/{collectionName}`
 
@@ -499,34 +500,34 @@ Further documentation can be found on the internal Swagger API available at `/v1
 
 To add metadata to an inserted collection, one can post a DCAT dataset on `/admin/api/v1/eventstreams/{collectionName}/dcat`
 
-```turtle
-@prefix dct:   <http://purl.org/dc/terms/> .
-@prefix dcat:  <http://www.w3.org/ns/dcat#> .
-@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
-@prefix org:   <http://www.w3.org/ns/org#> .
-@prefix legal: <http://www.w3.org/ns/legal#> .
-@prefix m8g:   <http://data.europa.eu/m8g/> .
-@prefix locn:  <http://www.w3.org/ns/locn#> .
+  ```turtle
+  @prefix dct:   <http://purl.org/dc/terms/> .
+  @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+  @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+  @prefix org:   <http://www.w3.org/ns/org#> .
+  @prefix legal: <http://www.w3.org/ns/legal#> .
+  @prefix m8g:   <http://data.europa.eu/m8g/> .
+  @prefix locn:  <http://www.w3.org/ns/locn#> .
 
-[] a dcat:Dataset ;
-  dct:title "My LDES"@en ;
-  dct:title "Mijn LDES"@nl ;
-  dct:description "LDES for my data collection"@en ;
-  dct:description "LDES vir my data-insameling"@af ;
-  dct:creator <http://sample.org/company/MyDataOwner> .
-  
-<http://sample.org/company/MyDataOwner> a legal:LegalEntity ;
-  foaf:name "Data Company" ;
-  legal:legalName "Data Company BV" ;
-  m8g:registeredAddress [ 
-    a locn:Address ;
-    locn:fullAddress "My full address here"
-  ] ;
-  m8g:contactPoint [
-    a m8g:ContactPoint ;
-    m8g:hasEmail "info@data-company.com"
-  ] .
-```
+  [] a dcat:Dataset ;
+    dct:title "My LDES"@en ;
+    dct:title "Mijn LDES"@nl ;
+    dct:description "LDES for my data collection"@en ;
+    dct:description "LDES vir my data-insameling"@af ;
+    dct:creator <http://sample.org/company/MyDataOwner> .
+    
+  <http://sample.org/company/MyDataOwner> a legal:LegalEntity ;
+    foaf:name "Data Company" ;
+    legal:legalName "Data Company BV" ;
+    m8g:registeredAddress [ 
+      a locn:Address ;
+      locn:fullAddress "My full address here"
+    ] ;
+    m8g:contactPoint [
+      a m8g:ContactPoint ;
+      m8g:hasEmail "info@data-company.com"
+    ] .
+  ```
 
 To update this entry, a PUT request can be performed on `/admin/api/v1/eventstreams/{collectionName}/dcat`.
 
@@ -540,26 +541,25 @@ Further documentation can be found on the internal Swagger API available at `/v1
 
 Setting up a view on the LDES Server can be done by performing a PUT operation with a RDF object defining a collection to `/admin/api/v1/eventstreams/{collectionName}/views`
 
-```turtle
-@prefix ldes: <https://w3id.org/ldes#> .
-@prefix tree: <https://w3id.org/tree#>.
-@prefix example: <http://example.org/> .
-@prefix server: <http://localhost:8080/name1/> .
-@prefix viewName: <http://localhost:8080/name1/view1/> .
+  ```turtle
+  @prefix ldes: <https://w3id.org/ldes#> .
+  @prefix tree: <https://w3id.org/tree#>.
+  @prefix example: <http://example.org/> .
+  @prefix server: <http://localhost:8080/name1/> .
+  @prefix viewName: <http://localhost:8080/name1/view1/> .
 
-viewName:description
-    a <https://w3id.org/tree#ViewDescription> ;
-    ldes:retentionPolicy [
-        a ldes:retentionPolicy ;
-        example:name "timebased";
-        example:duration "10" ;
-    ] .
+  viewName:description
+      a <https://w3id.org/tree#ViewDescription> ;
+      ldes:retentionPolicy [
+          a ldes:retentionPolicy ;
+          example:name "timebased";
+          example:duration "10" ;
+      ] .
 
-server:view1
-        <https://w3id.org/tree#viewDescription>
-                <http://localhost:8080/name1/view1/description> .
-
-```
+  server:view1
+          <https://w3id.org/tree#viewDescription>
+                  <http://localhost:8080/name1/view1/description> .
+  ```
 
 ```note
 Further documentation can be found on the internal Swagger API available at `/v1/swagger`
@@ -568,6 +568,7 @@ Further documentation can be found on the internal Swagger API available at `/v1
 ### Setting up metadata for view 
 
 To add metadata to an inserted view, one can perform a PUT operation with a DCAT view description and dataservice on `/admin/api/v1/eventstreams/{collectionName}/views/{viewName}/dcat`
+
 ```turtle
 @prefix tree: <https://w3id.org/tree#>.
 @prefix example: <http://example.org/> .

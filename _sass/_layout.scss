@@ -84,3 +84,31 @@
     max-width: $width-xl - $theme-menu-width;
   }
 }
+
+.highlight .kd{
+
+  color: #008000;
+}
+
+.highlight .nn {
+  color: #0000FF;
+}
+
+.highlight .ne,
+.highlight .nf,
+.highlight .fm,
+.highlight .nl {
+  color: #19177C;
+  font-weight: normal;
+}
+
+.highlight .mf,
+.highlight .mh,
+.highlight .il,
+.highlight .mi,
+.highlight .mo,
+.highlight .m,
+.highlight .mb,
+.highlight .mx {
+  color: #d14;
+}

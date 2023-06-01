@@ -1,65 +1,95 @@
 ---
-sort: 8
+sort: 9
 ---
 
-# USE CASE LDES SERVER
+# RELEASE MANAGEMENT
 
+
+## LDES Server [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Informatievlaanderen_VSDS-LDESServer4J&metric=alert_status&?style=social)](https://sonarcloud.io/summary/new_code?id=Informatievlaanderen_VSDS-LDESServer4J)
+
+
+<p align="left"><img src="https://img.shields.io/github/release-date/Informatievlaanderen/VSDS-LDESServer4J?style=social" text-align="left"></p>
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-LDESServer4J) for all the releases of the LDES server.
+
+
+## LDES Client
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-core/ldes-client) for all the LDI releases of the LDES client.
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-nifi/ldi-nifi-processors/ldes-client-processor) for all the Apache NiFi releases of the LDES client.
+
+
+## Linked Data Interactions [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Informatievlaanderen_VSDS-Linked-Data-Interactions&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Informatievlaanderen_VSDS-Linked-Data-Interactions)
+
+<p align="left"><img src="https://img.shields.io/github/release-date/Informatievlaanderen/VSDS-Linked-Data-Interactions?style=social" text-align="left"></p>
+
+The Linked Data Interactions Repo (LDI) is a bundle of basic SDKs used to receive, generate, transform and output Linked Data. This project is set up in the context of the VSDS Project to ease adopting LDES on data consumer and producer side.
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions) for all the releases of the Linked Data Interactions.
+
+## LDI API
+The LDI API provides a bundle of generic interfaces and classes to be used in the LDI SDKs
+
+For further information, please refer to the JavaDoc.
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-api) for the releases of the LDI API.
+
+## LDI Core
+The LDI Core module contains the SDKs maintained by the VSDS team in order to accommodate the onboarding of LDES onboarders.
+
+Each SDK can be wrapped in a desired implementation framework (LDI-orchestrator, NiFi, ...) to be used.
+
+More documentation on the individual SDKs can be found [here](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/blob/main/ldi-core/README.md)
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-core) for the releases of the LDI Core.
+
+## LDI implemented in Apache NiFi
+The VSDS team currently supports and maintains two implementation frameworks in which the SDKs can be run. Apache NiFi is one of them.
+
+Apache NiFi is a powerful data integration tool that enables organisations to manage and process their data flows in real-time.
+
+For further details on how to use our components in NiFi, please refer to the in-NiFi documentation.
+
+-[Apache NiFi](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-nifi)
+
+## LDI Orchestrator
+As NiFi can be quite extensive for setting up a basic Linked Data transformation, we provide an alternative lightweight Spring Boot based framework.
+
+For further details on how to use our components in the LDI Orchestrator, please refer to the [LDI Orchestrator documentation](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/blob/main/ldi-orchestrator/README.md)
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-Linked-Data-Interactions/tree/main/ldi-orchestrator) for the releases of the LDI Orchestrator.
+
+
+## LDES dockers
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-LDESDockers) for the repository with working docker environment for the GIPOD case.
+
+## LDES End to End testing (E2Etesting)
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing) for the repository with [End-to-end tests](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/main/e2e-test/README.md) and tooling needed for testing LDES components build as part of VSDS.
+
+## LDES workbench
+
+You can find the LDES workbench in these **archived** repositories:
+-[Command Line Interface](https://github.com/Informatievlaanderen/VSDS-LDESWorkbench-Services)
+-[Apache NiFi](https://github.com/Informatievlaanderen/VSDS-LDESWorkbench-NiFi)
+
+## LDES processors
+
+Go to [this Github repository](https://github.com/Informatievlaanderen/VSDS-LDESProcessors) for the repository with working LDES processors for Apache NiFi.This repository contains a collection of Apache Nifi processors that help working with LDES streams. These processors are considered experimental. Once they reach sufficient maturity, they will be moved to the [LDES workbench](https://github.com/Informatievlaanderen/VSDS-LDESWorkbench-NiFi).
+
+## LDES connectors
+
+Here you can find the [**archived** LDES connector repository](https://github.com/Informatievlaanderen/VSDS-LDESConnectors)
+
+
+## Notification of new releases
 ```tip
-Having trouble implementing these examples? Please post your issue on the [VSDS Tech docs repo](https://github.com/Informatievlaanderen/VSDS-Tech-Docs/issues).
 
+To get informed when a new version of a building block is released, go to 'watch'
+
+![](/VSDS-Tech-Docs/images/releases.png)
+
+On the [notifications](https://github.com/notifications) page, you can see your personal notification subscribtions  
 ```
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/onboarding.png"  width="50%" text-align="center"></p>
-
-Apache Kafka, Fiware-Orien Context Broker, and MQTT can be used as a Publisher to the VSDS LDES Ecosystem. The following examples will explain the use cases.   
-
-##  Kafka to LDES server
-
-
-
-Apache Kafka can be used as a data provider for ingesting data topics into the LDES ecosystem. The diagram below illustrates how the VSDS NIFI solution subscribes to a Kafka stream, updates the dataset's attributes, converts it into an LDES-formatted stream, and uses HTTP protocols to publish it to the LDES Server. This process enables fragmentation or pagination of the data.
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/Kafka_onboarding.png"  width="60%" text-align="center"></p>
-
-This [GitHub repository](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/d45ecbeee157255ff577728c2f198fa768a24d5a/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) demonstrates the configuration of transferring subscribed GRAR (Building units, addresses & parcels) Kafka data stream to the published substring fragmented LDES Stream using LDES Server. As we have no control over the GRAR system, the demo uses a [JSON Data Generator](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/d45ecbeee157255ff577728c2f198fa768a24d5a/json-data-generator/README.md) which produces a continuous stream of addresses as an alternative to the GRAR system. Also, the Apache NIFI has standard Kafka Reader processors for subscribing to Kafka stream, please modify the [nifi-workflow.json](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/d45ecbeee157255ff577728c2f198fa768a24d5a/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/nifi-workflow.json) accordingly based on your environment. An example setup with Kafka can be as follow ([GRAR.json](https://github.com/Informatievlaanderen/VSDS-Tech-Docs/blob/main/files/GRAR.json)), please modify the credentials for the Kafka topic accordingly:
-
-To try out the demo, you need to make sure the required ports for LDES Server and NIFI are free to be used. For the details, please refer to [docker-compose.yml](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/blob/d45ecbeee157255ff577728c2f198fa768a24d5a/e2e-test/use-cases/grar/1.addresses-substring-fragmentation/docker-compose.yml).
-
-The steps are composed of the following steps:
-
-1\. Docker run start all required docker images.
-
-2\. Upload a pre-defined NiFi workflow.
-
-3\. Start the NiFi workflow.
-
-4\. Start the address ingestion. (Modify according to your Kafka setup)
-
-Please follow [README.md](https://github.com/Informatievlaanderen/VSDS-LDES-E2E-testing/tree/d45ecbeee157255ff577728c2f198fa768a24d5a/e2e-test/use-cases/grar/1.addresses-substring-fragmentation) for step-by-step guide.
-
-* * * * *
-
-
-
-
-##  MQTT to LDES server
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/MQTT.png"  width="60%" text-align="center"></p>
-
-
-## Fiware to LDES server
-
-The FIWARE-Orion Context Broker (OCB) can be integrated as a data provider with the VSDS LDES (Linked Data Event Streams) Server. The OCB is an open-source software component developed by FIWARE that can manage real-time context information by receiving updates from IoT devices, sensors, and other sources and storing this information in a centralized location.
-
-One example of this integration is demonstrated in the diagram below, which illustrates the use case of onboarding the Internet of Water (VMM) data. The details of this use case locate at [Orien Context Broker - IOW.](https://github.com/Informatievlaanderen/VSDS-Onboarding-VMM/tree/main/iow) 
-
-
-<p align="center"><img src="/VSDS-Tech-Docs/images/orion_onboarding_iow.png"  width="70%" text-align="center"></p>
-
-In this case, the OCB is integrated into the LDES ecosystem to publish context updates to an LDES stream. The VSDS NIFI solution is used to translate the context data into LDES events and publish them to the LDES stream via an update attributes processor, an OSLO converter processor, and an LdesConverter process NIFI pipeline.
-
-Once the context updates are published to the LDES Sever in LDES formatted stream, they can be processed and stored in the LDES Server as linked data. This makes the context information available for further analysis and uses in other systems. An example NIFI setup with Fiware-Orien Context Broker can be as follow, which locates at [workflow.json](https://github.com/Informatievlaanderen/VSDS-Onboarding-VMM/blob/main/iow/workflow.json).
-
-Please follow [README.md](https://github.com/Informatievlaanderen/VSDS-Onboarding-VMM/blob/main/iow/README.md) for step-by-step guide.

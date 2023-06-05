@@ -115,3 +115,9 @@ display: none;
 .swagger-ui a.nostyle:visited{
 font-weight: bold;
 }
+
+
+.swagger-ui .scheme-container{
+visibility: hidden !important;
+display: none;    
+}

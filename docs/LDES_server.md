@@ -21,8 +21,6 @@ The LDES server is available as on open-source building block on [GitHub](https:
 
 {% include swagger2.html %}
 
-{% include swagger3.html %}
-
 
 ## Ingesting sources (HTTP in)
 

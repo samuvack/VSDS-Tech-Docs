@@ -29,13 +29,13 @@ To start a default LDES Server, a few basic steps are needed.
 
     ```yaml
     mongock:
-    migration-scan-package: VSDS
+        migration-scan-package: VSDS
     springdoc:
-    swagger-ui:
-        path: /v1/swagger
+        swagger-ui:
+            path: /v1/swagger
     management:
-    tracing:
-        enabled: false
+        tracing:
+            enabled: false
     ```
 
 - Create a local `docker-compose.yml` file with the content below.
@@ -85,34 +85,101 @@ To start a default LDES Server, a few basic steps are needed.
 -  The LDES Server is now available at port `8080` and accepts members via `HTTP POST` requests.
 -  We will now configure the LDES Server. (note that this part can also be done with the Swagger endpoint (`/v1/swagger`), where more detailed documentation is available)
 
--  Firstly, let's add collection for our mobility hindrances. This will be used to replicate the dataset from GIPOD:
+-  Let's set the DCAT metadata for the server by defining a title and a description:
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8080/admin/api/v1/dcat' \
+  -H 'accept: text/plain' \
+  -H 'Content-Type: text/turtle' \
+  ---data-raw '  @prefix dct:   <http://purl.org/dc/terms/> .
+        @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+
+        [] a dcat:Catalog ;
+        dct:title "My LDES'\''es"@en ;
+        dct:description "All LDES'\''es from publiser X"@en .
+        '
+```
+
+-  Next, let's add collection for our mobility hindrances. This will be used to replicate the dataset from GIPOD:
     - A collection name "mobility-hindrances"
     - Will process members of type "https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder"
-    - Will have a default view, which provides a basic view using a paginated fragmention. This also enables snapshotting.
+    - Will have 2 views :
+        - A default view, which provides a basic view using a paginated fragmention. This also enables snapshotting. (this view is called `by-page` by default)
+        - A time-based fragmented view. This will fragment the members based on their timebased property. This value is by default set to `http://www.w3.org/ns/prov#generatedAtTime`
 
     ```bash
     curl -X 'PUT' 'http://localhost:8080/admin/api/v1/eventstreams' \
     -H 'accept: text/turtle' \
     -H 'Content-Type: text/turtle' \
     --data-raw '@prefix ldes: <https://w3id.org/ldes#> .
-        @prefix custom: <http://example.org/> .
-        @prefix dcterms: <http://purl.org/dc/terms/> .
-        @prefix tree: <https://w3id.org/tree#>.
-        @prefix sh:   <http://www.w3.org/ns/shacl#> .
-        @prefix server: <http://localhost:8080/> .
-        @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+                @prefix dcterms: <http://purl.org/dc/terms/> .
+                @prefix tree: <https://w3id.org/tree#>.
+                @prefix sh:   <http://www.w3.org/ns/shacl#> .
+                @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+                @prefix example: <http://example.org/> .
+                @prefix collection: </mobility-hindrances/> .
 
 
-        server:mobility-hindrances a ldes:EventStream ;
-            ldes:timestampPath dcterms:created ;
-            ldes:versionOfPath dcterms:isVersionOf ;
-            custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
-            custom:hasDefaultView "true"^^xsd:boolean ;
-            tree:shape [
-                a sh:NodeShape ;
-            ] .
+                </mobility-hindrances> a ldes:EventStream ;
+                    ldes:timestampPath dcterms:created ;
+                    ldes:versionOfPath dcterms:isVersionOf ;
+                    example:memberType <https://data.vlaanderen.be/ns/mobiliteit#Mobiliteitshinder> ;
+                    example:hasDefaultView "true"^^xsd:boolean ;
+                    ldes:view collection:time-based ;
+                    tree:shape [
+                        a sh:NodeShape ;
+                    ] .
+                    
+                collection:time-based tree:viewDescription [
+                    ldes:retentionPolicy [
+                        a ldes:DurationAgoPolicy  ;
+                        tree:value "PT2M"^^xsd:duration ;
+                    ] ;
+                    example:fragmentationStrategy [
+                        a example:Fragmentation ;
+                        example:name "timebased" ;
+                        example:memberLimit "20" ;
+                    ] ;
+                ] .
         '
     ```
+
+-  Let's add some DCAT metadata for this collection:
+    - We define an English and Dutch title and description
+    - We define the creator of the collection to be http://sample.org/company/MyDataOwner
+
+    ```bash
+    curl -X 'POST' \
+    'http://localhost:8080/admin/api/v1/eventstreams/mobility-hindrances/dcat' \
+    -H 'accept: */*' \
+    -H 'Content-Type: text/turtle' \
+    -d '  @prefix dcat: <http://www.w3.org/ns/dcat#> .
+            @prefix dct: <http://purl.org/dc/terms/> .
+            [] a dcat:Dataset ;
+                dct:title "Mobility Hindrances Collection"@en ;
+                dct:title "Mobiliteitshindernissen collectie"@nl ;
+                dct:description "A collection containing mobility hindrances"@en ;
+                dct:description "Een collectie met Mobiliteitshindernissen"@nl ;
+                dct:creator <http://sample.org/company/MyDataOwner> ;'
+    ```
+-   We'll now also set the DCAT metadata for the time-based view by defining a title and a description :
+
+    ```bash
+    curl -X 'POST' \
+    'http://localhost:8080/admin/api/v1/eventstreams/mobility-hindrances/views/time-based/dcat' \
+    -H 'accept: */*' \
+    -H 'Content-Type: text/turtle' \
+    -d '@prefix dct:   <http://purl.org/dc/terms/> .
+        @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+
+        [] a dcat:DataService ;
+        dct:title "My timebased view"@en ;
+        dct:description "Timebased fragmentation for the mobility-hindrances "@en .
+        '
+    ```
+
+
 -  Next, let's add a second collection to collect observations:
     - A collection name "observations"
     - Will process members of type "https://data.vlaanderen.be/ns/mobiliteit#ObservationCollection"
@@ -123,7 +190,7 @@ To start a default LDES Server, a few basic steps are needed.
     -H 'accept: text/turtle' \
     -H 'Content-Type: text/turtle' \
     --data-raw '@prefix ldes: <https://w3id.org/ldes#> .
-    @prefix custom: <http://example.org/> .
+    @prefix example: <http://example.org/> .
     @prefix dcterms: <http://purl.org/dc/terms/> .
     @prefix tree: <https://w3id.org/tree#>.
     @prefix sh:   <http://www.w3.org/ns/shacl#> .
@@ -134,40 +201,12 @@ To start a default LDES Server, a few basic steps are needed.
     server:observations a ldes:EventStream ;
         ldes:timestampPath dcterms:created ;
         ldes:versionOfPath dcterms:isVersionOf ;
-        custom:memberType <https://data.vlaanderen.be/ns/mobiliteit#ObservationCollection> ;
-        custom:hasDefaultView "true"^^xsd:boolean ;
+        example:memberType <https://data.vlaanderen.be/ns/mobiliteit#ObservationCollection> ;
+        example:hasDefaultView "true"^^xsd:boolean ;
         tree:shape [
             a sh:NodeShape ;
         ] .
     '
-    ```
-
-- Adding timebased view for mobility-hindrances collection
-    - Adding a retention policy which will remove members older than 2 months.
-    - Setting a timebased fragmentation strategy. This will fragment the members based on their timebased property. This value is by default set to `http://www.w3.org/ns/prov#generatedAtTime`
-
-    ```bash
-    curl -X 'PUT' \
-    'http://localhost:8080/admin/api/v1/eventstreams/mobility-hindrances/views' \
-    -H 'accept: */*' \
-    -H 'Content-Type: text/turtle' \
-    --data-raw '@prefix ldes: <https://w3id.org/ldes#> .
-        @prefix tree: <https://w3id.org/tree#>.
-        @prefix example: <http://example.org/> .
-        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-        @prefix server: <http://localhost:8080/mobility-hindrances/> .
-
-        server:time-based tree:viewDescription [
-            ldes:retentionPolicy [
-                a ldes:DurationAgoPolicy  ;
-                tree:value "PT2M"^^xsd:duration ;
-            ] ;
-            example:fragmentationStrategy [
-                a example:Fragmentation ;
-                example:name "timebased" ;
-                example:memberLimit "20" ;
-            ] ;
-        ] .'
     ```
 
 ### Add data to the LDES Server
@@ -236,17 +275,17 @@ To start a default LDES Server, a few basic steps are needed.
 
     ```yaml
     orchestrator:
-    pipelines:
-      - name: gipod-replicator
-        description: "HTTP polling, OSLO transformation, version creation & HTTP sending."
-        input:
+        pipelines:
+        - name: gipod-replicator
+            description: "HTTP polling, OSLO transformation, version creation & HTTP sending."
+            input:
             name: be.vlaanderen.informatievlaanderen.ldes.ldi.client.LdioLdesClient
             config:
                 url: https://private-api.gipod.vlaanderen.be/api/v1/ldes/mobility-hindrances
-        outputs:
-          - name: be.vlaanderen.informatievlaanderen.ldes.ldio.LdioHttpOut
+            outputs:
+            - name: be.vlaanderen.informatievlaanderen.ldes.ldio.LdioHttpOut
             config:
-                endpoint: http://ldes-server:8080/mobility-hindrances
+                endpoint: http://host.docker.internal:8080/mobility-hindrances
                 content-type: application/n-quads
     ```
 - Execute the following command to start up the LDIO `docker compose up ldio-workbench -d`

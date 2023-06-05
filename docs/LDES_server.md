@@ -401,7 +401,7 @@ version: '3.3'
 services:
    ldes-server:
     container_name: basic_ldes-server
-    image: ldes/ldes-server:0.0.1-SNAPSHOT
+    image: ghcr.io/informatievlaanderen/ldes-server:20230602200451
     environment:
       - SPRING_CONFIG_LOCATION=/config/
     volumes:
